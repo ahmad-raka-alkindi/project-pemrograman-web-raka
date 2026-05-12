@@ -1,0 +1,115 @@
+<!-- Updated index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+
+    <!-- css raka buat jumbotronn -->
+    <link rel="stylesheet" href="style.css" />
+    <title>raka project UAS</title>
+  </head>
+  <body>
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Accordion Item #1</button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as
+            the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though
+            the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Accordion Item #2</button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well
+            as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>,
+            though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Accordion Item #3</button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well
+            as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>,
+            though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Fungsi yang dieksekusi secara langsung (Immediately Invoked Function Expression / IIFE).
+      // Tujuannya: Mengisolasi variabel di dalamnya agar tidak mengganggu kode lain.
+      (function () {
+        "use strict"; // Mengaktifkan mode ketat JavaScript (strict mode) untuk penulisan kode yang lebih aman.
+
+        // 1. Ambil semua elemen formulir yang menggunakan kelas "needs-validation".
+        // Kelas ini adalah penanda Bootstrap untuk formulir yang memerlukan validasi JavaScript.
+        var forms = document.querySelectorAll(".needs-validation");
+
+        // 2. Mengubah daftar NodeList formulir menjadi Array, lalu melakukan loop (perulangan) pada setiap formulir.
+        // Ini memastikan kode diterapkan pada semua form, meskipun hanya ada satu.
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          // 3. Menambahkan 'event listener' ke setiap formulir.
+          // Kode di bawah akan dijalankan ketika pengguna mencoba mengirim (submit) formulir.
+          form.addEventListener(
+            "submit",
+            function (event) {
+              // 4. Memeriksa apakah formulir valid (semua input 'required' telah diisi dengan benar)
+              // menggunakan API validasi bawaan HTML5: checkValidity().
+              if (!form.checkValidity()) {
+                // JIKA FORMULIR TIDAK VALID:
+
+                event.preventDefault(); // Mencegah aksi default browser (mengirim data dan memuat ulang halaman).
+                event.stopPropagation(); // Mencegah event 'submit' bergerak lebih jauh.
+
+                // Menampilkan pesan alert bahaya/gagal.
+                // Menghapus kelas 'd-none' (display: none) sehingga alert terlihat.
+                document.querySelector(".alert-danger").classList.remove("d-none");
+              } else {
+                // JIKA FORMULIR VALID:
+
+                // Menampilkan pesan alert sukses.
+                document.querySelector(".alert-success").classList.remove("d-none");
+
+                // Menyembunyikan pesan alert bahaya (jika sebelumnya sudah muncul).
+                document.querySelector(".alert-danger").classList.add("d-none");
+
+                form.reset(); // Mengosongkan semua kolom input formulir.
+
+                // Menghapus kelas 'was-validated' dari form
+                // agar feedback visual (warna merah/hijau) hilang setelah form di-reset.
+                form.classList.remove("was-validated");
+
+                // KRITIS: Di sini seharusnya diletakkan kode untuk mengirim data (misalnya dengan Fetch/AJAX).
+                // Karena tidak ada, form hanya di-reset setelah validasi sukses.
+              }
+
+              // Setelah semua pengecekan selesai, tambahkan kelas 'was-validated' ke formulir.
+              // Kelas inilah yang MENGAKTIFKAN tampilan feedback visual (border merah/hijau) dari Bootstrap.
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
