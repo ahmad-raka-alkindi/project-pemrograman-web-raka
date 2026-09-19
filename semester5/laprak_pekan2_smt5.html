@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum 1 - Pengenalan Widgets (Stateless & Stateful)</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <style>
+      body {
+        background-color: #f4f6f9;
+        color: #333;
+        line-height: 1.7;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER / NAVBAR SEDERHANA UNTUK NAVIGASI KEMBALI -->
+    <header class="bg-dark text-white py-3 shadow-sm sticky-top">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-text-fill text-warning me-2"></i> Detail Dokumen: Laporan Praktikum 1</h5>
+        <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Portofolio </a>
+      </div>
+    </header>
+
+    <!-- KONTEN UTAMA LAPORAN -->
+    <main class="container py-5">
+      <!-- HALAMAN COVER -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+        <div class="mb-4">
+          <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid" style="max-height: 180px" onerror="this.src = 'https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+        </div>
+        <h2 class="fw-bold text-uppercase mb-2" style="color: #1e3a8a">Laporan Praktikum Pemrograman Aplikasi Mobile MOdul 1</h2>
+        <h3 class="fw-semibold text-muted mb-4">Pengenalan Widgets: Stateless, Stateful, &amp; Manajemen State Dasar</h3>
+
+        <!-- TOMBOL LINK GITHUB -->
+        <div class="my-4">
+          <a href="https://github.com/ahmad-raka-alkindi/aplikasi-mobile/tree/praktikum-pert1" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-lg px-4 py-2 fw-bold shadow">
+            <i class="bi bi-github text-warning me-2 fs-5"></i> Repository GitHub: Praktikum Pertemuan 1
+            <i class="bi bi-box-arrow-up-right ms-2 small"></i>
+          </a>
+        </div>
+
+        <div class="py-3 my-4 border-top border-bottom" style="background-color: #fcfcfc">
+          <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+          <h4 class="fw-bold mb-1" style="color: #1f2937">AHMAD RAKA ALKINDI</h4>
+          <p class="lead text-muted mb-0">NIM. 2411533017</p>
+        </div>
+
+        <div class="mb-5">
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+          <p class="fw-semibold mb-3 text-dark">NURFIAH, S.ST, M.Kom.</p>
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+          <p class="fw-semibold text-dark">PEMROGRAMAN APLIKASI MOBILE</p>
+        </div>
+
+        <div class="text-secondary fw-bold small text-uppercase mt-5">
+          Program Studi S1 Informatika<br />
+          Fakultas Teknologi Informasi<br />
+          Universitas Andalas<br />
+          Padang
+        </div>
+      </div>
+
+      <!-- A. PENDAHULUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">A. Pendahuluan</h4>
+        <p style="text-align: justify">
+          Praktikum ini berfokus pada pengenalan konsep dasar <strong>Widget</strong> pada framework Flutter, khususnya perbedaan antara <strong>StatelessWidget</strong> dan <strong>StatefulWidget</strong> serta bagaimana Flutter mengelola
+          perubahan tampilan (UI) melalui manajemen state. Konsep dan komponen utama yang dipelajari pada praktikum ini meliputi:
+        </p>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-primary">
+              <h6 class="fw-bold text-primary">a. MaterialApp &amp; Scaffold</h6>
+              <p class="small text-muted mb-0">Kerangka dasar aplikasi Flutter yang menyediakan struktur halaman seperti AppBar, body, dan navigasi.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-success">
+              <h6 class="fw-bold text-success">b. StatelessWidget</h6>
+              <p class="small text-muted mb-0">Widget statis yang tampilannya tidak pernah berubah setelah dirender, cocok untuk label teks, ikon, dan gambar statis.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-warning">
+              <h6 class="fw-bold text-warning">c. StatefulWidget</h6>
+              <p class="small text-muted mb-0">Widget dinamis yang menyimpan data internal (State) dan dapat merender ulang UI sebagai respons terhadap interaksi pengguna.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">d. Method setState()</h6>
+              <p class="small text-muted mb-0">Method yang digunakan untuk memberi tahu Flutter bahwa terjadi perubahan data, sehingga UI perlu dibangun ulang (rebuild).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. TUJUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">B. Tujuan</h4>
+        <p style="text-align: justify">Tujuan dari praktikum ini adalah agar mahasiswa mampu:</p>
+        <ul style="text-align: justify">
+          <li>Memahami kerangka dasar aplikasi Flutter (<code>MaterialApp</code> &amp; <code>Scaffold</code>).</li>
+          <li>Membedakan penggunaan <code>StatelessWidget</code> dan <code>StatefulWidget</code>.</li>
+          <li>Menerapkan fungsi <code>setState()</code> untuk membuat UI yang interaktif.</li>
+        </ul>
+        <p class="mb-0 small text-muted"><strong>Alat yang digunakan:</strong> Flutter SDK, Code Editor (VS Code / Android Studio), Emulator / Device.</p>
+      </div>
+
+      <!-- C. ISI & LANGKAH KERJA -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-4 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">C. Isi &amp; Langkah Kerja</h4>
+        <p style="text-align: justify">
+          Pengerjaan praktikum dibagi menjadi pembuatan widget sapaan statis, pembuatan kartu saldo interaktif, serta penggabungan keduanya ke dalam satu dashboard. Berikut adalah alur dan dokumentasi langkah kerjanya:
+        </p>
+
+        <div class="row g-4 my-2">
+          <!-- 1. WIDGET UTAMA (main.dart) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #6366f1 !important">
+              <h5 class="fw-bold mb-3" style="color: #4338ca"><i class="bi bi-1-circle-fill me-2"></i>Widget Utama (main.dart &amp; MyApp)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Titik masuk aplikasi dijalankan melalui <code>void main()</code> yang memanggil <code>runApp(const MyApp())</code>. Kelas <code>MyApp</code> merupakan <code>StatelessWidget</code> yang membungkus <code>MaterialApp</code> dan
+                menentukan <code>DashboardScreen</code> sebagai halaman awal aplikasi.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan2/carbon (5).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode main.dart dan MyApp" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 1: Kode Program main.dart &amp; MyApp</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. HALAMAN UTAMA (Scaffold) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #0d6efd !important">
+              <h5 class="fw-bold text-primary mb-3"><i class="bi bi-2-circle-fill me-2"></i>Halaman Utama (DashboardScreen / Scaffold)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>DashboardScreen</code> berupa <code>StatelessWidget</code> yang membangun struktur halaman menggunakan <code>Scaffold</code>, lengkap dengan <code>AppBar</code> dan <code>body</code> berisi <code>Padding</code> serta
+                <code>Column</code> yang memanggil <code>GreetingWidget()</code> dan <code>BalanceCardWidget()</code>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan2/carbon (4).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode DashboardScreen" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 2: Kode Program DashboardScreen (Scaffold)</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. WIDGET SAPAAN (STATELESS) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #10b981 !important">
+              <h5 class="fw-bold text-success mb-3"><i class="bi bi-3-circle-fill me-2"></i>Widget Sapaan (GreetingWidget - Stateless)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Header statis berupa <code>GreetingWidget</code> yang menampilkan nama pengguna dan ikon avatar. Widget disusun menggunakan <code>Row</code> untuk menempatkan elemen kiri ke kanan, dan <code>Column</code> untuk menumpuk teks
+                sapaan secara vertikal.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan2/carbon (6).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode GreetingWidget" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 3: Kode Program GreetingWidget</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. KARTU SALDO (STATEFUL) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #f59e0b !important">
+              <h5 class="fw-bold mb-3" style="color: #b45309"><i class="bi bi-4-circle-fill me-2"></i>Kartu Saldo (BalanceCardWidget - Stateful)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>BalanceCardWidget</code> dibuat sebagai <code>StatefulWidget</code> agar dapat bereaksi saat ikon mata ditekan. Variabel <code>_isBalanceVisible</code> menyimpan status apakah saldo terlihat atau disensor, dan fungsi
+                <code>setState()</code> dipanggil untuk membalik nilai boolean tersebut sehingga UI dirender ulang. Bagian ini juga sudah mencakup hasil Tugas 1 (warna <code>Colors.teal</code>) dan Tugas 2 (teks "No. Rekening: 1234-5678").
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan2/carbon (7).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode BalanceCardWidget" style="max-height: 600px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 4: Kode Program BalanceCardWidget</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LATIHAN / TUGAS -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">Latihan / Tugas</h4>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-info">
+              <h6 class="fw-bold text-info">Tugas 1: Styling</h6>
+              <p class="small text-muted mb-0">Mengubah warna tema <code>BalanceCard</code> dari biru (<code>Colors.blueAccent</code>) menjadi hijau emerald (<code>Colors.teal</code>).</p>
+              <img src="../semester5/pekan2/carbon (9).png" class="img-fluid rounded border shadow-sm" alt="Screenshot tugas 1" style="max-height: 480px" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-secondary">
+              <h6 class="fw-bold text-secondary">Tugas 2: Modifikasi UI</h6>
+              <p class="small text-muted mb-0">Menambahkan teks statis berupa "No. Rekening: 1234-5678" di bagian bawah nominal saldo di dalam kartu.</p>
+              <img src="../semester5/pekan2/carbon (8).png" class="img-fluid rounded border shadow-sm" alt="Screenshot modifikasi UI" style="max-height: 480px" />
+            </div>
+          </div>
+        </div>
+        <p class="small text-muted fst-italic mb-0 mt-3">Implementasi kedua tugas di atas sudah dapat dilihat langsung pada kode program BalanceCardWidget (Gambar 4) di atas.</p>
+      </div>
+
+      <!-- D. KESIMPULAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">D. Kesimpulan</h4>
+        <p class="mb-0" style="text-align: justify">
+          Kesimpulan dari praktikum ini adalah saya telah memahami perbedaan mendasar antara <code>StatelessWidget</code> dan <code>StatefulWidget</code> dalam framework Flutter. <code>StatelessWidget</code> cocok digunakan untuk tampilan
+          statis seperti sapaan pengguna, sedangkan <code>StatefulWidget</code> diperlukan ketika tampilan harus berubah sebagai respons terhadap interaksi pengguna, seperti pada kartu saldo yang dapat disensor atau ditampilkan. Penggunaan
+          method <code>setState()</code> menjadi kunci utama dalam memperbarui UI secara dinamis tanpa perlu membangun ulang seluruh aplikasi.
+        </p>
+      </div>
+
+      <!-- BUTTON BACK TO PORTFOLIO -->
+      <div class="text-center py-3">
+        <a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Halaman Utama Portofolio </a>
+      </div>
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

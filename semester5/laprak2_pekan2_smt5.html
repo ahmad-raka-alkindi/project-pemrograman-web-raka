@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum 2 - Layouting & Styling (Row, Column, Container, ListTile)</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <style>
+      body {
+        background-color: #f4f6f9;
+        color: #333;
+        line-height: 1.7;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER / NAVBAR SEDERHANA UNTUK NAVIGASI KEMBALI -->
+    <header class="bg-dark text-white py-3 shadow-sm sticky-top">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-text-fill text-warning me-2"></i> Detail Dokumen: Laporan Praktikum 2</h5>
+        <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Portofolio </a>
+      </div>
+    </header>
+
+    <!-- KONTEN UTAMA LAPORAN -->
+    <main class="container py-5">
+      <!-- HALAMAN COVER -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+        <div class="mb-4">
+          <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid" style="max-height: 180px" onerror="this.src = 'https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+        </div>
+        <h2 class="fw-bold text-uppercase mb-2" style="color: #1e3a8a">Laporan Praktikum Pemrograman Aplikasi Mobile Modul 2</h2>
+        <h3 class="fw-semibold text-muted mb-4">Row, Column, Container, dan ListTile</h3>
+
+        <!-- TOMBOL LINK GITHUB -->
+        <div class="my-4">
+          <a href="https://github.com/ahmad-raka-alkindi/aplikasi-mobile/tree/praktikum-pert2" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-lg px-4 py-2 fw-bold shadow">
+            <i class="bi bi-github text-warning me-2 fs-5"></i> Repository GitHub: Praktikum Pertemuan 2
+            <i class="bi bi-box-arrow-up-right ms-2 small"></i>
+          </a>
+        </div>
+
+        <div class="py-3 my-4 border-top border-bottom" style="background-color: #fcfcfc">
+          <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+          <h4 class="fw-bold mb-1" style="color: #1f2937">AHMAD RAKA ALKINDI</h4>
+          <p class="lead text-muted mb-0">NIM. 2411533017</p>
+        </div>
+
+        <div class="mb-5">
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+          <p class="fw-semibold mb-3 text-dark">NURFIAH, S.ST, M.Kom.</p>
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+          <p class="fw-semibold text-dark">PEMROGRAMAN APLIKASI MOBILE</p>
+        </div>
+
+        <div class="text-secondary fw-bold small text-uppercase mt-5">
+          Program Studi S1 Informatika<br />
+          Fakultas Teknologi Informasi<br />
+          Universitas Andalas<br />
+          Padang
+        </div>
+      </div>
+
+      <!-- A. PENDAHULUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">A. Pendahuluan</h4>
+        <p style="text-align: justify">
+          Praktikum ini berfokus pada penguasaan teknik <strong>Layouting</strong> dan <strong>Styling</strong> dalam framework Flutter, khususnya penggunaan widget <code>Row</code>, <code>Column</code>, <code>Container</code>, dan
+          <code>ListTile</code> untuk menyusun tampilan dashboard aplikasi. Konsep dan widget utama yang dipelajari pada praktikum ini meliputi:
+        </p>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-primary">
+              <h6 class="fw-bold text-primary">a. Row</h6>
+              <p class="small text-muted mb-0">Widget untuk menyusun elemen secara menyamping (horizontal), dari kiri ke kanan.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-success">
+              <h6 class="fw-bold text-success">b. Column</h6>
+              <p class="small text-muted mb-0">Widget untuk menyusun elemen secara menurun (vertikal), dari atas ke bawah.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-warning">
+              <h6 class="fw-bold text-warning">c. Container</h6>
+              <p class="small text-muted mb-0">Kotak pembungkus yang dapat diatur padding, margin, warna, dan batasnya (border/decoration).</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">d. ListTile</h6>
+              <p class="small text-muted mb-0">Widget bawaan Material Design untuk membuat baris daftar secara instan, terdiri dari <code>leading</code>, <code>title</code>, dan <code>trailing</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. TUJUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">B. Tujuan</h4>
+        <p style="text-align: justify">Tujuan dari praktikum ini adalah agar mahasiswa mampu:</p>
+        <ul style="text-align: justify">
+          <li>Menerapkan widget <code>Row</code> untuk deretan tombol aksi.</li>
+          <li>Menerapkan widget <code>Column</code> untuk daftar transaksi.</li>
+          <li>Mengatur padding, margin, dan warna <code>Container</code>.</li>
+        </ul>
+        <p class="mb-0 small text-muted"><strong>Alat yang digunakan:</strong> Flutter SDK, Code Editor (VS Code / Android Studio), Emulator / Device.</p>
+      </div>
+
+      <!-- C. ISI & LANGKAH KERJA -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-4 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">C. Isi &amp; Langkah Kerja</h4>
+        <p style="text-align: justify">
+          Pengerjaan praktikum dibagi menjadi pembuatan tombol aksi menggunakan <code>Row</code>, pembuatan riwayat transaksi menggunakan <code>Column</code> dan <code>ListTile</code>, serta integrasi seluruh komponen ke dalam satu
+          dashboard yang dapat digulir (<em>scrollable</em>). Berikut adalah alur dan dokumentasi langkah kerjanya:
+        </p>
+
+        <div class="row g-4 my-2">
+          <!-- 1. WIDGET UTAMA (main.dart) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #6366f1 !important">
+              <h5 class="fw-bold mb-3" style="color: #4338ca"><i class="bi bi-1-circle-fill me-2"></i>Widget Utama (main.dart &amp; MyApp)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Titik masuk aplikasi tetap sama seperti Praktikum 1: <code>void main()</code> memanggil <code>runApp(const MyApp())</code>, dan <code>MyApp</code> membungkus <code>MaterialApp</code> dengan <code>DashboardScreen</code>
+                sebagai halaman awal.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/file2pekan2/carbon (10).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode main.dart dan MyApp" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 1: Kode Program main.dart &amp; MyApp</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. HALAMAN UTAMA (Scaffold, Scrollable) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #0d6efd !important">
+              <h5 class="fw-bold text-primary mb-3"><i class="bi bi-2-circle-fill me-2"></i>Halaman Utama (DashboardScreen - Diperbarui)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>DashboardScreen</code> diperbarui dengan membungkus <code>Padding</code> dan <code>Column</code> menggunakan <code>SingleChildScrollView</code>, sehingga seluruh komponen (<code>GreetingWidget</code>,
+                <code>BalanceCardWidget</code>, <code>ActionButtonsWidget</code>, dan <code>RecentTransactionsWidget</code>) dapat digulir tanpa <em>overflow</em>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/file2pekan2/carbon (11).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode DashboardScreen yang diperbarui" style="max-height: 520px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 2: Kode Program DashboardScreen (Scaffold + SingleChildScrollView)</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. WIDGET SAPAAN -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #10b981 !important">
+              <h5 class="fw-bold text-success mb-3"><i class="bi bi-3-circle-fill me-2"></i>Widget Sapaan (GreetingWidget - dari Modul 1)</h5>
+              <p class="small text-muted" style="text-align: justify">Widget sapaan statis yang sama dari Praktikum 1, dipanggil ulang sebagai komponen pertama di dalam dashboard.</p>
+              <div class="text-center">
+                <img src="../semester5/file2pekan2/carbon (12).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode GreetingWidget" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 3: Kode Program GreetingWidget</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. KARTU SALDO -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #f59e0b !important">
+              <h5 class="fw-bold mb-3" style="color: #b45309"><i class="bi bi-4-circle-fill me-2"></i>Kartu Saldo (BalanceCardWidget - dari Modul 1)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>BalanceCardWidget</code> yang sama dari Praktikum 1 (sudah termasuk warna <code>Colors.teal</code> dan teks "No. Rekening") tetap dipertahankan sebagai komponen kedua di dashboard.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/file2pekan2/carbon (13).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode BalanceCardWidget" style="max-height: 600px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 4: Kode Program BalanceCardWidget</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. TOMBOL AKSI (ROW) -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #ec4899 !important">
+              <h5 class="fw-bold mb-3" style="color: #be185d"><i class="bi bi-5-circle-fill me-2"></i>Tombol Aksi (ActionButtonsWidget - Row)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>ActionButtonsWidget</code> menggunakan <code>Row</code> dengan <code>mainAxisAlignment: MainAxisAlignment.spaceEvenly</code> untuk menata tombol Pemasukan, Pengeluaran, dan Transfer secara horizontal dengan jarak yang
+                sama rata. Fungsi pembantu <code>_buildActionButton()</code> dibuat terpisah agar kode tidak berulang untuk setiap tombol.
+              </p>
+              <div class="row g-3 mt-1">
+                <div class="col-md-7">
+                  <div class="text-center">
+                    <img src="../semester5/file2pekan2/carbon (14).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode ActionButtonsWidget" style="max-height: 480px" />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 5: Kode Program ActionButtonsWidget</small>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="text-center">
+                    <img src="../semester5/file2pekan2/carbon (15).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode fungsi pembantu _buildActionButton" style="max-height: 480px" />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 6: Fungsi Pembantu _buildActionButton</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. DAFTAR TRANSAKSI -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #14b8a6 !important">
+              <h5 class="fw-bold mb-3" style="color: #0f766e"><i class="bi bi-6-circle-fill me-2"></i>Daftar Transaksi (RecentTransactionsWidget - Column &amp; ListTile)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>RecentTransactionsWidget</code> menggunakan <code>Column</code> untuk menumpuk judul "Transaksi Terakhir" dengan sebuah <code>Card</code> berisi tiga <code>ListTile</code> berturut-turut (Makan Siang, Gaji Bulanan, dan
+                Isi Bensin), masing-masing dengan <code>leading</code>, <code>title</code>, <code>subtitle</code>, dan <code>trailing</code> yang diberi warna berbeda sesuai jenis transaksi.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/file2pekan2/carbon (16).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode RecentTransactionsWidget" style="max-height: 700px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 7: Kode Program RecentTransactionsWidget</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LATIHAN / TUGAS -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">Latihan / Tugas</h4>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-info">
+              <h6 class="fw-bold text-info">Tugas 1: Styling</h6>
+              <p class="small text-muted mb-0">Pada widget Daftar Transaksi (<code>ListTile</code>), mengubah warna <em>trailing text</em> pengeluaran menjadi merah dan <em>text</em> pemasukan menjadi hijau.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-secondary">
+              <h6 class="fw-bold text-secondary">Tugas 2: Tambah Data</h6>
+              <p class="small text-muted mb-0">Menambahkan 2 transaksi fiktif baru ke dalam daftar "Transaksi Terakhir" di bawah kode yang sudah ada.</p>
+            </div>
+          </div>
+        </div>
+        <p class="small text-muted fst-italic mb-0 mt-3">Implementasi Tugas 1 sudah dapat dilihat langsung pada kode program RecentTransactionsWidget (Gambar 7) di atas.</p>
+      </div>
+
+      <!-- D. KESIMPULAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">D. Kesimpulan</h4>
+        <p class="mb-0" style="text-align: justify">
+          Kesimpulan dari praktikum ini adalah saya telah memahami tata cara penggunaan <code>Row</code> untuk menyusun elemen secara horizontal dan <code>Column</code> untuk menyusun elemen secara vertikal. Widget
+          <code>Container</code> mempermudah pengaturan padding, margin, dan dekorasi visual, sedangkan <code>ListTile</code> mempercepat pembuatan baris daftar transaksi yang rapi dan konsisten. Penggabungan seluruh komponen ke dalam
+          <code>SingleChildScrollView</code> juga berhasil mencegah terjadinya <em>overflow</em> ketika daftar transaksi bertambah panjang, sehingga dashboard aplikasi tetap dapat digulir dengan baik.
+        </p>
+      </div>
+
+      <!-- BUTTON BACK TO PORTFOLIO -->
+      <div class="text-center py-3">
+        <a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Halaman Utama Portofolio </a>
+      </div>
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
