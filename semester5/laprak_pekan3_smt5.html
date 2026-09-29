@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum 3 - Input Widgets &amp; Forms</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <style>
+      body { background-color: #f4f6f9; color: #333; line-height: 1.7; font-family: "Segoe UI", Arial, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <header class="bg-dark text-white py-3 shadow-sm sticky-top">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-text-fill text-warning me-2"></i> Detail Dokumen: Laporan Praktikum 3</h5>
+        <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Portofolio </a>
+      </div>
+    </header>
+
+    <main class="container py-5">
+      <!-- COVER -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+        <div class="mb-4">
+          <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid" style="max-height: 180px" onerror="this.src = 'https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+        </div>
+        <h2 class="fw-bold text-uppercase mb-2" style="color: #1e3a8a">Laporan Praktikum Pemrograman Aplikasi Mobile Modul 3</h2>
+        <h3 class="fw-semibold text-muted mb-4">Input Widgets &amp; Forms: Menangkap Data, Dropdown, dan Validasi</h3>
+
+        <div class="my-4">
+          <a href="https://github.com/ahmad-raka-alkindi/project-pemrograman-web-raka/blob/main/semester5/laprak_pekan3_smt5.html" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-lg px-4 py-2 fw-bold shadow">
+            <i class="bi bi-github text-warning me-2 fs-5"></i> Repository GitHub: Praktikum Pertemuan 3
+            <i class="bi bi-box-arrow-up-right ms-2 small"></i>
+          </a>
+        </div>
+
+        <div class="py-3 my-4 border-top border-bottom" style="background-color: #fcfcfc">
+          <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+          <h4 class="fw-bold mb-1" style="color: #1f2937">AHMAD RAKA ALKINDI</h4>
+          <p class="lead text-muted mb-0">NIM. 2411533017</p>
+        </div>
+
+        <div class="mb-5">
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+          <p class="fw-semibold mb-3 text-dark">NURFIAH, S.ST, M.Kom.</p>
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+          <p class="fw-semibold text-dark">PEMROGRAMAN APLIKASI MOBILE</p>
+        </div>
+
+        <div class="text-secondary fw-bold small text-uppercase mt-5">
+          Program Studi S1 Informatika<br />
+          Fakultas Teknologi Informasi<br />
+          Universitas Andalas<br />
+          Padang
+        </div>
+      </div>
+
+      <!-- A. PENDAHULUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">A. Pendahuluan</h4>
+        <p style="text-align: justify">
+          Praktikum ini berfokus pada pembuatan formulir input pada Flutter untuk menangkap data dari pengguna, menyediakan pilihan melalui dropdown, serta memvalidasi isian agar data kosong atau berformat salah tidak masuk ke dalam sistem.
+          Konsep dan komponen utama yang dipelajari (Pilar Formulir Flutter) meliputi:
+        </p>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-primary">
+              <h6 class="fw-bold text-primary">a. Form &amp; GlobalKey</h6>
+              <p class="small text-muted mb-0">Wadah utama untuk memvalidasi banyak input sekaligus. <code>GlobalKey&lt;FormState&gt;</code> digunakan untuk memicu validasi seluruh kolom.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-success">
+              <h6 class="fw-bold text-success">b. TextFormField</h6>
+              <p class="small text-muted mb-0">Kolom teks yang mendukung validasi terintegrasi melalui properti <code>validator</code>.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-warning">
+              <h6 class="fw-bold text-warning">c. TextEditingController</h6>
+              <p class="small text-muted mb-0">Pengendali untuk membaca (dan mengubah) teks yang diketik pengguna pada sebuah kolom input.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">d. Validator</h6>
+              <p class="small text-muted mb-0">Fungsi yang memeriksa isi kolom. Mengembalikan <code>null</code> jika data valid, dan mengembalikan <code>String</code> (pesan error merah) jika data tidak valid.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. TUJUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">B. Tujuan</h4>
+        <p style="text-align: justify">Tujuan dari praktikum ini adalah agar mahasiswa mampu:</p>
+        <ul style="text-align: justify">
+          <li>Menangkap teks dari pengguna melalui <code>TextEditingController</code>.</li>
+          <li>Menerapkan widget dropdown statis menggunakan <code>DropdownButtonFormField</code>.</li>
+          <li>Melakukan validasi input untuk mencegah data kosong atau format yang salah.</li>
+        </ul>
+        <p class="mb-0 small text-muted"><strong>Alat yang digunakan:</strong> Flutter SDK, Code Editor (VS Code / Android Studio), Emulator / Device.</p>
+      </div>
+
+      <!-- C. ISI & LANGKAH KERJA -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-4 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">C. Isi &amp; Langkah Kerja</h4>
+        <p style="text-align: justify">
+          Pengerjaan praktikum dilakukan dengan membuat file baru <code>add_transaction_screen.dart</code> yang berisi formulir pencatatan transaksi, kemudian memanggilnya dari <code>main.dart</code>. Berikut adalah alur dan dokumentasi langkah kerjanya:
+        </p>
+
+        <div class="row g-4 my-2">
+          <!-- 1 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #6366f1 !important">
+              <h5 class="fw-bold mb-3" style="color: #4338ca"><i class="bi bi-1-circle-fill me-2"></i>Widget Utama (main.dart &amp; MyApp)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Titik masuk aplikasi berada pada <code>void main()</code> yang memanggil <code>runApp(const MyApp())</code>. Kelas <code>MyApp</code> merupakan <code>StatelessWidget</code> yang membungkus <code>MaterialApp</code> dengan tema
+                <code>Colors.deepPurple</code>, dan menetapkan <code>AddTransactionScreen</code> sebagai halaman awal. File <code>add_transaction_screen.dart</code> diimpor pada bagian atas.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (25).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode main.dart dan MyApp" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 1: Kode Program main.dart &amp; MyApp</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #0d6efd !important">
+              <h5 class="fw-bold text-primary mb-3"><i class="bi bi-2-circle-fill me-2"></i>Kelas AddTransactionScreen (StatefulWidget)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>AddTransactionScreen</code> dibuat sebagai <code>StatefulWidget</code> karena isi formulir (teks dan dropdown) akan terus berubah saat pengguna mengetik. Method <code>createState()</code> mengembalikan
+                <code>_AddTransactionScreenState</code> yang menyimpan seluruh data internal formulir. Pada file ini juga diimpor <code>services.dart</code> untuk kebutuhan <code>FilteringTextInputFormatter</code>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (19).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode kelas AddTransactionScreen" style="max-height: 480px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 2: Kode Program Kelas AddTransactionScreen</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #10b981 !important">
+              <h5 class="fw-bold text-success mb-3"><i class="bi bi-3-circle-fill me-2"></i>Persiapan State &amp; Controller</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Pada <code>_AddTransactionScreenState</code> disiapkan <code>_formKey</code> (<code>GlobalKey&lt;FormState&gt;</code>) untuk memicu validasi, serta empat controller: <code>_titleController</code>, <code>_amountController</code>,
+                <code>_notesController</code>, dan <code>_dateController</code> (controller tambahan untuk latihan). State dropdown disimpan pada <code>_selectedCategory</code>, <code>_selectedType</code>, dan <code>_selectedDate</code>, dengan daftar kategori
+                <code>_categories</code> berisi Makanan, Transportasi, Hiburan, dan Lainnya.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (20).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode state dan controller" style="max-height: 560px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 3: Kode Program State &amp; Controller</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #f59e0b !important">
+              <h5 class="fw-bold mb-3" style="color: #b45309"><i class="bi bi-4-circle-fill me-2"></i>Method dispose() &amp; _selectDate()</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Method <code>dispose()</code> membersihkan seluruh controller saat halaman ditutup untuk mencegah <em>memory leak</em>. Method <code>_selectDate()</code> memanggil <code>showDatePicker</code> (rentang tahun 2020&ndash;2100); jika pengguna memilih tanggal,
+                <code>setState()</code> memperbarui <code>_selectedDate</code> dan mengisi <code>_dateController.text</code> dengan format <strong>DD/MM/YYYY</strong> memakai <code>padLeft(2, '0')</code>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (21).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode dispose dan selectDate" style="max-height: 600px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 4: Kode Program dispose() &amp; _selectDate()</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #ef4444 !important">
+              <h5 class="fw-bold text-danger mb-3"><i class="bi bi-5-circle-fill me-2"></i>Method _saveTransaction()</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Method ini terlebih dahulu menjalankan <code>_formKey.currentState!.validate()</code>; bila ada kolom tidak valid, proses dihentikan. Jika lolos, tanggal diformat lalu ditampilkan pada <code>AlertDialog</code> berjudul
+                "Transaksi tersimpan" yang memuat jenis, nominal, judul, kategori, dan tanggal. Tombol "Selesai" menutup dialog dan mengosongkan semua controller (termasuk <code>_dateController</code>) serta mengembalikan state ke nilai awal.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (22).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode saveTransaction" style="max-height: 640px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 5: Kode Program _saveTransaction()</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #8b5cf6 !important">
+              <h5 class="fw-bold mb-3" style="color: #6d28d9"><i class="bi bi-6-circle-fill me-2"></i>Method build() Bagian 1: Form, Jenis, Judul &amp; Nominal</h5>
+              <p class="small text-muted" style="text-align: justify">
+                <code>build()</code> mengembalikan <code>Scaffold</code> dengan <code>AppBar</code> ungu. Body dibungkus <code>SingleChildScrollView</code> agar layout tidak error saat keyboard muncul, lalu <code>Form</code> yang dihubungkan dengan <code>_formKey</code>.
+                Kolom pertama adalah <code>DropdownButtonFormField</code> "Jenis transaksi" (Pengeluaran / Pemasukan). Kolom judul memakai <code>TextFormField</code> dengan validator: tidak boleh kosong dan minimal 3 karakter.
+                Kolom nominal memakai <code>TextInputType.number</code>, <code>FilteringTextInputFormatter.digitsOnly</code>, dan validator yang memastikan nilai terisi serta berupa angka bulat lebih dari 0 melalui <code>int.tryParse</code>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (23).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode build bagian 1" style="max-height: 700px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 6: Kode Program build() Bagian 1</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #0ea5e9 !important">
+              <h5 class="fw-bold mb-3" style="color: #0369a1"><i class="bi bi-7-circle-fill me-2"></i>Method build() Bagian 2: Kategori, Catatan, Tanggal &amp; Tombol Simpan</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Kolom selanjutnya adalah dropdown "Kategori" yang item-nya dibuat dari <code>_categories.map(...)</code> dan diperbarui dengan <code>setState()</code> pada <code>onChanged</code>. Lalu terdapat kolom "Catatan (opsional)" dengan <code>maxLines: 3</code>,
+                sebuah <code>ListTile</code> yang menampilkan tanggal transaksi beserta tombol "Ubah", dan kolom "Tanggal Transaksi (DD/MM/YYYY)" yang bersifat <code>readOnly</code> dengan <code>onTap: _selectDate</code>, ikon <code>edit_calendar</code>
+                sebagai tombol pemilih tanggal, serta validator wajib diisi. Terakhir, <code>ElevatedButton</code> "Simpan Transaksi" memanggil <code>_saveTransaction</code>.
+              </p>
+              <div class="text-center">
+                <img src="../semester5/pekan3/carbon (24).png" class="img-fluid rounded border shadow-sm" alt="Screenshot kode build bagian 2" style="max-height: 700px" />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 7: Kode Program build() Bagian 2</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LATIHAN / TUGAS -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">Latihan / Tugas: Input Tanggal</h4>
+        <p style="text-align: justify">Menambahkan satu input baru sebelum tombol Simpan untuk mengisi Tanggal Transaksi, dengan ketentuan berikut:</p>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-info">
+              <h6 class="fw-bold text-info">1. TextFormField Tanggal</h6>
+              <p class="small text-muted mb-0">Menggunakan <code>TextFormField</code> dengan <code>_dateController</code> dan format teks DD/MM/YYYY.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-secondary">
+              <h6 class="fw-bold text-secondary">2. Tombol showDatePicker</h6>
+              <p class="small text-muted mb-0">Ikon <code>edit_calendar</code> dan <code>onTap</code> memanggil <code>_selectDate()</code> yang menjalankan <code>showDatePicker</code>.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">3. Validasi Wajib Diisi</h6>
+              <p class="small text-muted mb-0">Validator mengembalikan "Tanggal transaksi wajib diisi!" bila kolom kosong.</p>
+            </div>
+          </div>
+        </div>
+        <p class="small text-muted fst-italic mb-0 mt-3">Implementasi latihan ini dapat dilihat pada Gambar 3, 4, dan 7.</p>
+      </div>
+
+      <!-- HASIL OUTPUT -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">Hasil Output Program</h4>
+        <div class="row g-4 text-center">
+          <div class="col-md-6 col-lg-3">
+            <img src="https://placehold.co/300x600/e5e7eb/6b7280?text=Output+1%0ATampilan+Awal+Form" class="img-fluid rounded border shadow-sm" alt="Output tampilan awal form" />
+            <small class="text-muted d-block mt-2 small fw-semibold">Gambar 8: Tampilan Awal Form</small>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <img src="https://placehold.co/300x600/e5e7eb/6b7280?text=Output+2%0AValidasi+Error" class="img-fluid rounded border shadow-sm" alt="Output validasi error" />
+            <small class="text-muted d-block mt-2 small fw-semibold">Gambar 9: Pesan Validasi Error</small>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <img src="https://placehold.co/300x600/e5e7eb/6b7280?text=Output+3%0ADate+Picker" class="img-fluid rounded border shadow-sm" alt="Output date picker" />
+            <small class="text-muted d-block mt-2 small fw-semibold">Gambar 10: Date Picker Tanggal</small>
+          </div>
+          <div class="col-md-6 col-lg-3">
+            <img src="https://placehold.co/300x600/e5e7eb/6b7280?text=Output+4%0ADialog+Tersimpan" class="img-fluid rounded border shadow-sm" alt="Output dialog transaksi tersimpan" />
+            <small class="text-muted d-block mt-2 small fw-semibold">Gambar 11: Dialog Transaksi Tersimpan</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- D. KESIMPULAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">D. Kesimpulan</h4>
+        <p class="mb-0" style="text-align: justify">
+          Kesimpulan dari praktikum ini adalah saya telah memahami cara membuat formulir input pada Flutter. <code>TextEditingController</code> digunakan untuk menangkap teks dari pengguna, <code>DropdownButtonFormField</code> untuk pilihan statis
+          seperti jenis transaksi dan kategori, serta <code>Form</code> dengan <code>GlobalKey</code> dan <code>validator</code> untuk mencegah data kosong atau berformat salah sebelum disimpan. Selain itu, penambahan input tanggal dengan
+          <code>showDatePicker</code> melatih penggunaan <code>setState()</code> untuk memperbarui tampilan dan controller secara bersamaan, dan pemanggilan <code>dispose()</code> menjaga aplikasi dari <em>memory leak</em>.
+        </p>
+      </div>
+
+      <div class="text-center py-3">
+        <a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm"> <i class="bi bi-arrow-left me-1"></i> Kembali ke Halaman Utama Portofolio </a>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
