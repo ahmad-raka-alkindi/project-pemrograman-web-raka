@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum 4 - Navigasi dan Passing Data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f4f6f9;
+        color: #333;
+        line-height: 1.7;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bg-dark text-white py-3 shadow-sm sticky-top">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 fw-bold">Detail Dokumen: Laporan Praktikum 4</h5>
+        <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold">Kembali ke Portofolio</a>
+      </div>
+    </header>
+
+    <main class="container py-5">
+      <!-- COVER -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+        <div class="mb-4">
+          <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid" style="max-height: 180px" onerror="this.src = 'https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+        </div>
+        <h2 class="fw-bold text-uppercase mb-2" style="color: #1e3a8a">Laporan Praktikum Pemrograman Aplikasi Mobile</h2>
+        <h3 class="fw-semibold text-muted mb-4">Navigasi dan Passing Data: Navigator, Konsep Stack, dan Constructor</h3>
+
+        <div class="my-4">
+          <a href="https://github.com/ahmad-raka-alkindi/aplikasi-mobile/tree/praktikum4" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-lg px-4 py-2 fw-bold shadow"> Repository GitHub: Praktikum Pertemuan 4 </a>
+        </div>
+
+        <div class="py-3 my-4 border-top border-bottom" style="background-color: #fcfcfc">
+          <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+          <h4 class="fw-bold mb-1" style="color: #1f2937">AHMAD RAKA ALKINDI</h4>
+          <p class="lead text-muted mb-0">NIM. 2411533017</p>
+        </div>
+
+        <div class="mb-5">
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+          <p class="fw-semibold mb-3 text-dark">NURFIAH, S.ST, M.Kom.</p>
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+          <p class="fw-semibold text-dark">PEMROGRAMAN APLIKASI MOBILE</p>
+        </div>
+
+        <div class="text-secondary fw-bold small text-uppercase mt-5">
+          Program Studi S1 Informatika<br />
+          Fakultas Teknologi Informasi<br />
+          Universitas Andalas<br />
+          Padang
+        </div>
+      </div>
+
+      <!-- A. PENDAHULUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">A. Pendahuluan</h4>
+        <p style="text-align: justify">
+          Praktikum ini membahas perpindahan antar halaman (navigasi) dan pengiriman data antar layar pada framework Flutter. Pada aplikasi mobile, satu aplikasi umumnya terdiri dari banyak layar, sehingga diperlukan mekanisme untuk
+          berpindah dari satu layar ke layar lain serta membawa data yang dibutuhkan. Konsep dan komponen utama yang dipelajari pada praktikum ini meliputi:
+        </p>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-primary">
+              <h6 class="fw-bold text-primary">a. Navigator dan Konsep Stack</h6>
+              <p class="small text-muted mb-0">Navigator adalah widget pengelola rute (halaman) yang bekerja seperti tumpukan kartu. Halaman yang tampil adalah halaman yang berada di tumpukan paling atas.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-success">
+              <h6 class="fw-bold text-success">b. Navigator.push</h6>
+              <p class="small text-muted mb-0">Meletakkan halaman baru di tumpukan teratas sehingga pengguna berpindah ke layar baru. Dipadukan dengan <code>MaterialPageRoute</code> sebagai pembangun halaman tujuan.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-warning">
+              <h6 class="fw-bold text-warning">c. Navigator.pop</h6>
+              <p class="small text-muted mb-0">Menghapus atau menutup halaman teratas sehingga pengguna kembali ke halaman sebelumnya.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">d. Constructor dan Passing Data</h6>
+              <p class="small text-muted mb-0">Halaman tujuan menyiapkan variabel <code>final</code> sebagai penampung data dan constructor dengan penanda <code>required</code> agar data wajib diisi saat berpindah layar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B. TUJUAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">B. Tujuan</h4>
+        <ul class="mb-0">
+          <li>Menerapkan <code>Navigator.push</code> untuk berpindah ke layar baru.</li>
+          <li>Menggunakan <code>Navigator.pop</code> untuk menutup layar setelah aksi selesai.</li>
+          <li>Mengirim data (String, int) antar layar melalui Constructor.</li>
+        </ul>
+      </div>
+
+      <!-- C. ALAT -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">C. Alat</h4>
+        <ul class="mb-0">
+          <li>Flutter SDK</li>
+          <li>Code Editor: VS Code atau Android Studio</li>
+          <li>Emulator atau perangkat fisik (device)</li>
+        </ul>
+      </div>
+
+      <!-- D. LANGKAH KERJA -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-4 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">D. Isi dan Langkah Kerja</h4>
+        <p style="text-align: justify">
+          Praktikum dikerjakan pada aplikasi Expense Tracker dengan tema warna merah. Struktur proyek dibagi menjadi empat file di dalam folder <code>lib</code>, yaitu <code>main.dart</code>, <code>dashboard_screen.dart</code>,
+          <code>add_transaction_screen.dart</code>, dan <code>transaction_detail_screen.dart</code>. Berikut alur pengerjaannya:
+        </p>
+
+        <ul class="nav nav-tabs justify-content-center my-4" id="laprak4Tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-bold text-uppercase small" id="tab4-detail-tab" data-bs-toggle="tab" data-bs-target="#tab4-detail" type="button" role="tab" aria-selected="true">1. Halaman Detail dan Push</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-uppercase small" id="tab4-pop-tab" data-bs-toggle="tab" data-bs-target="#tab4-pop" type="button" role="tab" aria-selected="false">2. Navigator.pop pada Form</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-uppercase small" id="tab4-latihan-tab" data-bs-toggle="tab" data-bs-target="#tab4-latihan" type="button" role="tab" aria-selected="false">3. Latihan Input Tanggal</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-uppercase small" id="tab4-code-tab" data-bs-toggle="tab" data-bs-target="#tab4-code" type="button" role="tab" aria-selected="false">4. Kode Program Flutter</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="laprak4TabContent">
+          <!-- TAB 1 -->
+          <div class="tab-pane fade show active p-2" id="tab4-detail" role="tabpanel" aria-labelledby="tab4-detail-tab">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #0d6efd !important">
+              <h5 class="fw-bold text-primary mb-3">LANGKAH 1: MEMBUAT HALAMAN DETAIL TRANSAKSI DAN MENGIRIM DATA (PUSH)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Dibuat file baru <code>transaction_detail_screen.dart</code> berupa <code>StatelessWidget</code> yang menyiapkan variabel <code>final</code> untuk menampung data (<code>title</code>, <code>amount</code>,
+                <code>category</code>, dan <code>date</code>) serta constructor dengan penanda <code>required</code>, sehingga data wajib dikirim dari layar sebelumnya. Data tersebut kemudian ditampilkan pada UI menggunakan widget
+                <code>Text</code>.
+              </p>
+              <p class="small text-muted" style="text-align: justify">
+                Selanjutnya pada <code>dashboard_screen.dart</code>, setiap <code>ListTile</code> pada daftar transaksi diberi fungsi <code>onTap</code> yang memanggil <code>Navigator.push</code> dengan <code>MaterialPageRoute</code>. Data
+                judul, nominal, kategori, dan tanggal diisi sesuai baris yang diklik. Tombol panah kembali pada AppBar muncul secara otomatis berkat <code>Navigator.push</code>.
+              </p>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163503.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Halaman Dashboard"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Halaman+Dashboard'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 1: Halaman Dashboard dengan Daftar Transaksi</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163529.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Halaman Detail Transaksi"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Halaman+Detail+Transaksi'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 2: Halaman Detail Transaksi Setelah Item Diklik</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-primary small mt-3 mb-0">
+                <strong>Komponen Utama yang Digunakan:</strong><br />
+                <code>Navigator.push(context, MaterialPageRoute(builder: (context) =&gt; TransactionDetailScreen(...)));</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2 -->
+          <div class="tab-pane fade p-2" id="tab4-pop" role="tabpanel" aria-labelledby="tab4-pop-tab">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #10b981 !important">
+              <h5 class="fw-bold text-success mb-3">LANGKAH 2: MENUTUP LAYAR DAN KEMBALI OTOMATIS (POP)</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Pada file <code>add_transaction_screen.dart</code>, tombol Simpan diatur agar setelah validasi form berhasil, aplikasi menampilkan <code>SnackBar</code> sebagai notifikasi sukses, kemudian memanggil
+                <code>Navigator.pop(context)</code> untuk menutup formulir dan kembali ke Dashboard. Halaman Dashboard sendiri membuka form melalui <code>FloatingActionButton</code> yang menggunakan <code>Navigator.push</code>.
+              </p>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163540.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Form Catat Transaksi"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Form+Catat+Transaksi'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 3: Form Catat Transaksi</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163618.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Kembali ke Dashboard"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kembali+ke+Dashboard'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 4: Kembali ke Dashboard Setelah Menekan Simpan, Muncul Notifikasi Transaksi Berhasil Disimpan</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-success small mt-3 mb-0">
+                <strong>Komponen Utama yang Digunakan:</strong><br />
+                <code>Navigator.pop(context);</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3 -->
+          <div class="tab-pane fade p-2" id="tab4-latihan" role="tabpanel" aria-labelledby="tab4-latihan-tab">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #dc3545 !important">
+              <h5 class="fw-bold text-danger mb-3">LANGKAH 3: LATIHAN, INPUT TANGGAL TRANSAKSI</h5>
+              <p class="small text-muted" style="text-align: justify">
+                Pada latihan, ditambahkan satu input baru sebelum tombol Simpan pada form untuk mengisi Tanggal Transaksi. Input berupa <code>TextFormField</code> dengan label Tanggal (DD/MM/YYYY) yang dikontrol oleh
+                <code>_dateController</code> dan diset <code>readOnly: true</code> agar tidak diketik manual. Pada bagian <code>suffixIcon</code> dipasang <code>IconButton</code> berikon kalender yang memanggil <code>showDatePicker</code>,
+                sehingga pengguna memilih tanggal melalui kalender, lalu hasilnya ditulis ke controller. Field ini diberi validasi wajib diisi dengan pesan "Tanggal wajib diisi".
+              </p>
+
+              <div class="row g-3 my-3">
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163559.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Input Tanggal dengan Date Picker"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Input+Tanggal+dan+Date+Picker'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 5: Input Tanggal dengan showDatePicker</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-2 bg-light rounded border text-center shadow-sm">
+                    <img
+                      src="../semester5/pekan4/Screenshot%202026-10-06%20163609.png"
+                      class="img-fluid rounded border shadow-sm"
+                      style="max-height: 520px"
+                      alt="Form dengan Tanggal Terpilih"
+                      onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Form+dengan+Tanggal+Terpilih'"
+                    />
+                    <small class="text-muted d-block mt-2 small fw-semibold">Gambar 6: Form Setelah Tanggal Dipilih dari Kalender</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="alert alert-danger small mt-3 mb-0">
+                <strong>Komponen Utama yang Digunakan:</strong><br />
+                <code>showDatePicker</code>, <code>TextFormField</code>, dan <code>validator</code>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4 -->
+          <div class="tab-pane fade p-2" id="tab4-code" role="tabpanel" aria-labelledby="tab4-code-tab">
+            <div class="p-4 border rounded shadow-sm bg-white" style="border-left: 5px solid #f59e0b !important">
+              <h5 class="fw-bold mb-3" style="color: #b45309">LANGKAH 4: SOURCE CODE KODE PROGRAM FLUTTER</h5>
+              <p class="small text-muted" style="text-align: justify">Berikut adalah dokumentasi kode program dari empat file yang dibuat pada praktikum ini. Kode lengkap dapat dilihat pada repository GitHub.</p>
+              <h6 class="fw-bold mt-4 mb-1">lib/main.dart</h6>
+              <p class="small text-muted" style="text-align: justify">File utama untuk menjalankan aplikasi. Tema warna disesuaikan menjadi merah dan halaman pertama yang dimuat adalah <code>DashboardScreen</code>.</p>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(33).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Kode main.dart"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+33'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 7: Kode main.dart</small>
+              </div>
+              <h6 class="fw-bold mt-4 mb-1">lib/dashboard_screen.dart</h6>
+              <p class="small text-muted" style="text-align: justify">
+                Halaman utama yang berisi tombol mengambang (FAB) untuk berpindah ke form dengan <code>Navigator.push</code>, kartu saldo, serta daftar transaksi yang dapat diklik untuk membuka halaman detail dengan mengirim data.
+              </p>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(28).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Import dan AppBar pada Dashboard"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+28'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 8: Import dan AppBar pada Dashboard</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(29).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="FloatingActionButton dengan Navigator.push ke form"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+29'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 9: FloatingActionButton dengan Navigator.push ke form</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(30).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Body Dashboard"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+30'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 10: Body Dashboard</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(31).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Widget _buildBalanceCard"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+31'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 11: Widget _buildBalanceCard</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(32).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Widget _buildTransactionList dengan Passing Data"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+32'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 12: Widget _buildTransactionList dengan Passing Data</small>
+              </div>
+              <h6 class="fw-bold mt-4 mb-1">lib/add_transaction_screen.dart</h6>
+              <p class="small text-muted" style="text-align: justify">
+                Halaman form pencatatan transaksi. Pada praktikum ini ditambahkan <code>_dateController</code> dan input tanggal dengan <code>showDatePicker</code>, serta <code>Navigator.pop</code> pada tombol Simpan.
+              </p>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(26).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Deklarasi controller dan AppBar pada form"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+26'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 13: Deklarasi controller dan AppBar pada form</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(27).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Body form, input tanggal, dan Navigator.pop"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+27'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 14: Body form, input tanggal, dan Navigator.pop</small>
+              </div>
+              <h6 class="fw-bold mt-4 mb-1">lib/transaction_detail_screen.dart</h6>
+              <p class="small text-muted" style="text-align: justify">Halaman detail yang menerima data melalui constructor dengan variabel <code>final</code> dan penanda <code>required</code>.</p>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(34).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Constructor dan tampilan halaman detail"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+34'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 15: Constructor dan tampilan halaman detail</small>
+              </div>
+              <div class="p-2 bg-light rounded border text-center shadow-sm mb-3">
+                <img
+                  src="../semester5/pekan4/carbon%20(35).png"
+                  class="img-fluid rounded border shadow-sm"
+                  alt="Widget pembantu _buildDetailRow"
+                  style="max-height: 700px"
+                  onerror="this.src = 'https://placehold.co/600x400/e9ecef/6c757d?text=Kode+Program+35'"
+                />
+                <small class="text-muted d-block mt-2 small fw-semibold">Gambar 16: Widget pembantu _buildDetailRow</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- E. KESIMPULAN -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color: #1e3a8a">E. Kesimpulan</h4>
+        <p class="mb-0" style="text-align: justify">
+          Kesimpulan dari praktikum ini adalah saya telah memahami cara kerja navigasi pada Flutter yang menggunakan konsep tumpukan (stack). <code>Navigator.push</code> berfungsi untuk berpindah ke halaman baru, sedangkan
+          <code>Navigator.pop</code> berfungsi untuk menutup halaman dan kembali ke halaman sebelumnya. Selain itu, pengiriman data antar layar dapat dilakukan melalui constructor dengan variabel <code>final</code> dan penanda
+          <code>required</code>, sehingga halaman detail transaksi dapat menampilkan data sesuai item yang diklik pada Dashboard. Pada latihan, penambahan input tanggal dengan <code>showDatePicker</code> dan validasi wajib diisi melengkapi
+          form pencatatan transaksi pada aplikasi Expense Tracker.
+        </p>
+      </div>
+
+      <div class="text-center py-3">
+        <a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm">Kembali ke Halaman Utama Portofolio</a>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
