@@ -21,4 +21,3 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ./rakaalkindi/
           dangerous-clean-slate: true
-          timeout: 120000
