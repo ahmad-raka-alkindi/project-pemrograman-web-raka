@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laporan Praktikum Pemrograman Aplikasi Mobile - Integrasi Pekan 1 s.d. Pekan 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 110px;
+      }
+      body {
+        background-color: #f4f6f9;
+        color: #333;
+        line-height: 1.7;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      .sec-title {
+        color: #1e3a8a;
+      }
+      .code-img {
+        max-height: 560px;
+        cursor: zoom-in;
+      }
+      .shot {
+        max-height: 440px;
+      }
+      .nav-anchor a {
+        font-size: 0.8rem;
+      }
+      .part-badge {
+        letter-spacing: 1px;
+      }
+      .explain li {
+        margin-bottom: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="bg-dark text-white py-3 shadow-sm sticky-top">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0 fw-bold"><i class="bi bi-file-earmark-text-fill text-warning me-2"></i> Detail Dokumen: Laporan Praktikum Integrasi Aplikasi</h5>
+          <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold"><i class="bi bi-arrow-left me-1"></i> Kembali ke Portofolio</a>
+        </div>
+        <nav class="nav-anchor mt-2 d-flex flex-wrap gap-2">
+          <a href="#pendahuluan" class="btn btn-sm btn-outline-secondary text-white">Pendahuluan</a>
+          <a href="#praktikum" class="btn btn-sm btn-outline-secondary text-white">Praktikum</a>
+          <a href="#tugas" class="btn btn-sm btn-outline-secondary text-white">Tugas</a>
+          <a href="#struktur" class="btn btn-sm btn-outline-secondary text-white">Struktur Program</a>
+          <a href="#video" class="btn btn-sm btn-outline-secondary text-white">Video Demo</a>
+          <a href="#kesimpulan" class="btn btn-sm btn-outline-secondary text-white">Kesimpulan</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container py-5">
+      <!-- COVER -->
+      <div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+        <div class="mb-4">
+          <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid" style="max-height: 180px" onerror="this.src = 'https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+        </div>
+        <h2 class="fw-bold text-uppercase mb-2" style="color: #1e3a8a">Laporan Praktikum Pemrograman Aplikasi Mobile</h2>
+        <h3 class="fw-semibold text-muted mb-4">Integrasi Arsitektur Navigasi (Named Routes), Bottom Navigation Bar, &amp; Manajemen State Aplikasi Finansial</h3>
+
+        <div class="my-4 d-flex flex-wrap justify-content-center gap-2">
+          <a href="https://github.com/ahmad-raka-alkindi/aplikasi-mobile/tree/praktikum5" target="_blank" rel="noopener noreferrer" class="btn btn-dark btn-lg px-4 py-2 fw-bold shadow">
+            <i class="bi bi-github text-warning me-2 fs-5"></i> Repository GitHub <i class="bi bi-box-arrow-up-right ms-2 small"></i>
+          </a>
+          <a href="#video" class="btn btn-danger btn-lg px-4 py-2 fw-bold shadow"><i class="bi bi-youtube me-2 fs-5"></i> Tonton Video Demo</a>
+        </div>
+
+        <div class="py-3 my-4 border-top border-bottom" style="background-color: #fcfcfc">
+          <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+          <h4 class="fw-bold mb-1" style="color: #1f2937">AHMAD RAKA ALKINDI</h4>
+          <p class="lead text-muted mb-0">NIM. 2411533017</p>
+        </div>
+
+        <div class="mb-5">
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+          <p class="fw-semibold mb-3 text-dark">ARIFAN RAHMAN, S.Kom, M.Kom.</p>
+          <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+          <p class="fw-semibold text-dark">PEMROGRAMAN APLIKASI MOBILE</p>
+        </div>
+
+        <div class="text-secondary fw-bold small text-uppercase mt-5">Program Studi S1 Informatika<br />Fakultas Teknologi Informasi<br />Universitas Andalas<br />Padang</div>
+      </div>
+
+      <!-- A. PENDAHULUAN -->
+      <section id="pendahuluan" class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title">A. Pendahuluan</h4>
+        <p style="text-align: justify">
+          Praktikum modul akhir ini berfokus pada penggabungan seluruh komponen yang telah dipelajari dari pekan pertama hingga pekan kelima menjadi sebuah aplikasi finansial berbasis Flutter ("Expense Tracker Final") yang utuh dan
+          terintegrasi. Fokus utama meliputi penerapan arsitektur navigasi terpusat menggunakan <strong>Named Routes</strong>, penyusunan menu bawah interaktif <strong>Bottom Navigation Bar</strong>, serta implementasi halaman autentikasi
+          login dan halaman profil pengguna.
+        </p>
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-primary">
+              <h6 class="fw-bold text-primary">a. Named Routes</h6>
+              <p class="small text-muted mb-0">Peta rute string terpusat di <code>MaterialApp</code> (<code>/login</code> dan <code>/add</code>) untuk menyederhanakan perpindahan layar.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-success">
+              <h6 class="fw-bold text-success">b. Bottom Navigation Bar</h6>
+              <p class="small text-muted mb-0">Navigasi tab bawah (Beranda, Riwayat, Profil) yang mengganti isi <code>body</code> pada satu <code>Scaffold</code>.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-warning">
+              <h6 class="fw-bold text-warning">c. State Management</h6>
+              <p class="small text-muted mb-0"><code>StatefulWidget</code> dan <code>setState()</code> untuk mengelola indeks tab aktif pada <code>MainScreen</code>.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded h-100 border-start border-4 border-danger">
+              <h6 class="fw-bold text-danger">d. Autentikasi Pengguna</h6>
+              <p class="small text-muted mb-0">Login bervalidasi form yang meneruskan email ke dashboard dan profil, serta logout dengan dialog konfirmasi.</p>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="fw-bold mt-4">Tujuan</h6>
+        <ul style="text-align: justify" class="mb-2">
+          <li>Menerapkan <code>Named Routes</code> untuk manajemen navigasi aplikasi yang terstruktur.</li>
+          <li>Membangun menu navigasi bawah (<code>Bottom Navigation Bar</code>) ala aplikasi finansial modern.</li>
+          <li>Mengintegrasikan halaman Beranda (dashboard), Riwayat, dan Profil ke dalam satu aplikasi yang kohesif.</li>
+          <li>Menyelesaikan tugas akhir berupa halaman login bervalidasi dan halaman profil dengan fitur logout.</li>
+        </ul>
+        <p class="mb-0 small text-muted"><strong>Alat yang digunakan:</strong> Flutter SDK, Code Editor (VS Code / Android Studio), Emulator / Device.</p>
+      </section>
+
+      <!-- B. PRAKTIKUM -->
+      <section id="praktikum" class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <span class="badge bg-primary part-badge mb-2">BAGIAN I</span>
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title">B. Hasil Praktikum</h4>
+        <p style="text-align: justify">
+          Bagian ini mendokumentasikan pekerjaan yang mengikuti petunjuk modul: konfigurasi rute, penampung tab, dan halaman dashboard beserta daftar transaksinya. <em>Klik gambar kode untuk melihat ukuran penuh.</em>
+        </p>
+
+        <div class="row g-4">
+          <!-- 1 main.dart -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm" style="border-left: 5px solid #6366f1 !important">
+              <h5 class="fw-bold mb-2" style="color: #4338ca"><i class="bi bi-1-circle-fill me-2"></i>Konfigurasi Named Routes <code>main.dart</code></h5>
+              <div class="text-center mb-3">
+                <a href="../semester5/pekan5/carbon38.png" target="_blank"
+                  ><img src="../semester5/pekan5/carbon38.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode main.dart" onerror="this.src = 'https://placehold.co/600x400/eee/333?text=main.dart'"
+                /></a>
+                <small class="text-muted d-block mt-2 fw-semibold">Gambar 1: Kode program main.dart</small>
+              </div>
+              <ul class="small text-muted explain mb-0" style="text-align: justify">
+                <li><code>main()</code> menjalankan <code>MyApp</code> yang membangun <code>MaterialApp</code> bertema <code>primarySwatch: Colors.amber</code>.</li>
+                <li><code>initialRoute: '/login'</code> membuat layar pertama adalah halaman login.</li>
+                <li>
+                  Map <code>routes</code> mendaftarkan <code>'/login'</code> → <code>LoginScreen</code> dan <code>'/add'</code> → <code>AddTransactionScreen</code>, sehingga cukup dipanggil dengan
+                  <code>Navigator.pushNamed(context, '/add')</code>.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 2 main_screen -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm" style="border-left: 5px solid #0d6efd !important">
+              <h5 class="fw-bold text-primary mb-2"><i class="bi bi-2-circle-fill me-2"></i>Penampung Tab Utama <code>main_screen.dart</code></h5>
+              <div class="text-center mb-3">
+                <a href="../semester5/pekan5/carbon37.png" target="_blank"
+                  ><img src="../semester5/pekan5/carbon37.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode main_screen.dart" onerror="this.src = 'https://placehold.co/600x400/eee/333?text=main_screen.dart'"
+                /></a>
+                <small class="text-muted d-block mt-2 fw-semibold">Gambar 2: Kode program MainScreen &amp; Bottom Navigation Bar</small>
+              </div>
+              <ul class="small text-muted explain mb-0" style="text-align: justify">
+                <li><code>MainScreen</code> adalah <code>StatefulWidget</code> yang menerima parameter <code>email</code> dari halaman login.</li>
+                <li><code>_selectedIndex</code> menyimpan tab aktif (default 0 = Beranda); <code>_pages</code> berisi <code>DashboardScreen</code>, halaman Riwayat (sementara placeholder), dan <code>ProfileScreen</code>.</li>
+                <li><code>_onItemTapped()</code> memanggil <code>setState()</code> sehingga <code>body: _pages[_selectedIndex]</code> berganti sesuai tab yang ditekan.</li>
+                <li><code>BottomNavigationBar</code> memiliki tiga item (Beranda, Riwayat, Profil) dengan <code>selectedItemColor: Colors.amber[800]</code>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 3 dashboard -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm" style="border-left: 5px solid #f59e0b !important">
+              <h5 class="fw-bold mb-2" style="color: #b45309"><i class="bi bi-3-circle-fill me-2"></i>Dashboard Keuangan <code>dashboard_screen.dart</code></h5>
+              <div class="row g-3 mb-3">
+                <div class="col-md-6 text-center">
+                  <a href="../semester5/pekan5/carbon39.png" target="_blank"
+                    ><img src="../semester5/pekan5/carbon39.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode DashboardScreen" onerror="this.src = 'https://placehold.co/400x600/eee/333?text=dashboard_screen.dart'"
+                  /></a>
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 3.1: DashboardScreen &amp; kartu saldo</small>
+                </div>
+                <div class="col-md-6 text-center">
+                  <a href="../semester5/pekan5/carbon40.png" target="_blank"
+                    ><img src="../semester5/pekan5/carbon40.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode daftar transaksi" onerror="this.src = 'https://placehold.co/400x600/eee/333?text=_buildTransactionList'"
+                  /></a>
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 3.2: Method _buildTransactionList()</small>
+                </div>
+              </div>
+              <ul class="small text-muted explain mb-3" style="text-align: justify">
+                <li><code>DashboardScreen</code> menerima <code>email</code> lalu menampilkannya di bagian atas, diikuti kartu saldo (<code>_buildBalanceCard()</code>, "Saldo Utama Rp 5.000.000") dan judul "Transaksi Terakhir".</li>
+                <li><code>FloatingActionButton</code> memanggil <code>Navigator.pushNamed(context, '/add')</code> untuk membuka form tambah transaksi lewat named route.</li>
+                <li><code>_buildTransactionList()</code> menyusun <code>Card</code> berisi <code>ListTile</code> (ikon, judul, tanggal, nominal berwarna merah untuk pengeluaran dan hijau untuk pemasukan).</li>
+                <li>Saat <code>onTap</code>, <code>Navigator.push</code> membuka <code>TransactionDetailScreen</code> dengan membawa data judul, nominal, kategori, dan tanggal.</li>
+              </ul>
+              <p class="small fw-semibold mb-2">Hasil eksekusi:</p>
+              <div class="row g-3 justify-content-center">
+                <div class="col-6 col-md-4 text-center">
+                  <img src="../semester5/pekan5/Screenshot%202026-10-24%20162655.png" class="img-fluid rounded border shadow-sm shot" alt="Dashboard" onerror="this.src = 'https://placehold.co/300x600/eee/333?text=Dashboard'" />
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 3.3: Tab Beranda</small>
+                </div>
+                <div class="col-6 col-md-4 text-center">
+                  <img
+                    src="../semester5/pekan5/Screenshot%202026-10-24%20162755.png"
+                    class="img-fluid rounded border shadow-sm shot"
+                    alt="Form catat transaksi"
+                    onerror="this.src = 'https://placehold.co/300x600/eee/333?text=Form+Catat+Transaksi'"
+                  />
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 3.4: Form Catat Transaksi (/add)</small>
+                </div>
+                <div class="col-6 col-md-4 text-center">
+                  <img
+                    src="../semester5/pekan5/Screenshot%202026-10-24%20162803.png"
+                    class="img-fluid rounded border shadow-sm shot"
+                    alt="Dashboard setelah transaksi disimpan"
+                    onerror="this.src = 'https://placehold.co/300x600/eee/333?text=Setelah+Disimpan'"
+                  />
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 3.5: Dashboard setelah transaksi disimpan</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C. TUGAS -->
+      <section id="tugas" class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <span class="badge bg-success part-badge mb-2">BAGIAN II</span>
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title">C. Hasil Tugas</h4>
+        <p style="text-align: justify">Tugas akhir terdiri dari halaman login bervalidasi dan halaman profil yang menampilkan data pengguna beserta fitur logout.</p>
+
+        <div class="row g-4">
+          <!-- Login -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm" style="border-left: 5px solid #10b981 !important">
+              <h5 class="fw-bold text-success mb-2"><i class="bi bi-1-circle-fill me-2"></i>Tugas 1: Halaman Login <code>login_screen.dart</code></h5>
+              <div class="text-center mb-3">
+                <a href="../semester5/pekan5/carbon41.png" target="_blank"
+                  ><img src="../semester5/pekan5/carbon41.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode LoginScreen" onerror="this.src = 'https://placehold.co/400x600/eee/333?text=login_screen.dart'"
+                /></a>
+                <small class="text-muted d-block mt-2 fw-semibold">Gambar 4: Kode program LoginScreen</small>
+              </div>
+              <ul class="small text-muted explain mb-3" style="text-align: justify">
+                <li><code>GlobalKey&lt;FormState&gt;</code> dan dua <code>TextEditingController</code> (email, password) mengendalikan form; keduanya dibuang di <code>dispose()</code> agar tidak terjadi kebocoran memori.</li>
+                <li>Validator email menolak input kosong dan input tanpa karakter <code>@</code>; validator password menolak input kosong.</li>
+                <li>
+                  <code>_login()</code> menjalankan <code>validate()</code>; jika lolos, <code>Navigator.pushReplacement</code> membuka <code>MainScreen(email: ...)</code> sehingga pengguna tidak bisa kembali ke login dengan tombol back.
+                </li>
+                <li>Kolom password memakai <code>obscureText: true</code>, dan <code>onFieldSubmitted</code> memungkinkan login lewat tombol enter keyboard.</li>
+              </ul>
+              <p class="small fw-semibold mb-2">Hasil eksekusi:</p>
+              <div class="row g-3 justify-content-center">
+                <div class="col-6 col-md-4 text-center">
+                  <img src="../semester5/pekan5/Screenshot%202026-10-24%20162635.png" class="img-fluid rounded border shadow-sm shot" alt="Login" onerror="this.src = 'https://placehold.co/300x600/eee/333?text=Login'" />
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 4.1: Halaman login</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profil -->
+          <div class="col-12">
+            <div class="p-4 border rounded shadow-sm" style="border-left: 5px solid #ef4444 !important">
+              <h5 class="fw-bold text-danger mb-2"><i class="bi bi-2-circle-fill me-2"></i>Tugas 2: Halaman Profil &amp; Logout <code>profile_screen.dart</code></h5>
+              <div class="text-center mb-3">
+                <a href="../semester5/pekan5/carbon36.png" target="_blank"
+                  ><img src="../semester5/pekan5/carbon36.png" class="img-fluid rounded border shadow-sm code-img" alt="Kode ProfileScreen" onerror="this.src = 'https://placehold.co/400x600/eee/333?text=profile_screen.dart'"
+                /></a>
+                <small class="text-muted d-block mt-2 fw-semibold">Gambar 5: Kode program ProfileScreen</small>
+              </div>
+              <ul class="small text-muted explain mb-3" style="text-align: justify">
+                <li><code>ProfileScreen</code> menerima <code>email</code>; nama pengguna diambil dari bagian sebelum <code>@</code> memakai <code>email.split('@').first</code> (bernilai "Pengguna" jika kosong).</li>
+                <li>Tampilan terdiri dari <code>CircleAvatar</code>, nama, email, dan tombol <code>OutlinedButton.icon</code> "Logout".</li>
+                <li><code>_confirmLogout()</code> menampilkan <code>AlertDialog</code> lewat <code>showDialog&lt;bool&gt;</code> dengan pilihan Batal / Logout.</li>
+                <li>Jika dikonfirmasi dan <code>context.mounted</code>, <code>pushAndRemoveUntil</code> membuka <code>LoginScreen</code> dan menghapus seluruh tumpukan halaman sebelumnya.</li>
+              </ul>
+              <p class="small fw-semibold mb-2">Hasil eksekusi:</p>
+              <div class="row g-3 justify-content-center">
+                <div class="col-6 col-md-4 text-center">
+                  <img
+                    src="../semester5/pekan5/Screenshot%202026-10-24%20162818.png"
+                    class="img-fluid rounded border shadow-sm shot"
+                    alt="Tab Profil dengan dialog logout"
+                    onerror="this.src = 'https://placehold.co/300x600/eee/333?text=Dialog+Logout'"
+                  />
+                  <small class="text-muted d-block mt-2 fw-semibold">Gambar 5.1: Tab Profil dengan dialog konfirmasi logout</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- D. STRUKTUR -->
+      <section id="struktur" class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title">D. Struktur &amp; Alur Program</h4>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm align-middle small">
+            <thead class="table-dark">
+              <tr>
+                <th>Berkas</th>
+                <th>Jenis</th>
+                <th>Fungsi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>main.dart</code></td>
+                <td><span class="badge bg-primary">Praktikum</span></td>
+                <td>Titik masuk, tema, <code>initialRoute</code>, dan peta named routes.</td>
+              </tr>
+              <tr>
+                <td><code>main_screen.dart</code></td>
+                <td><span class="badge bg-primary">Praktikum</span></td>
+                <td>Penampung tab + <code>BottomNavigationBar</code>, menyimpan indeks tab aktif.</td>
+              </tr>
+              <tr>
+                <td><code>dashboard_screen.dart</code></td>
+                <td><span class="badge bg-primary">Praktikum</span></td>
+                <td>Tab Beranda: email, kartu saldo, daftar transaksi terakhir, tombol tambah.</td>
+              </tr>
+              <tr>
+                <td><code>transaction_detail_screen.dart</code></td>
+                <td><span class="badge bg-primary">Praktikum</span></td>
+                <td>Menampilkan detail satu transaksi (judul, nominal, kategori, tanggal).</td>
+              </tr>
+              <tr>
+                <td><code>add_transaction_screen.dart</code></td>
+                <td><span class="badge bg-primary">Praktikum</span></td>
+                <td>Form tambah transaksi, dibuka lewat rute <code>/add</code>.</td>
+              </tr>
+              <tr>
+                <td><code>login_screen.dart</code></td>
+                <td><span class="badge bg-success">Tugas</span></td>
+                <td>Form login bervalidasi, lalu berpindah ke <code>MainScreen</code>.</td>
+              </tr>
+              <tr>
+                <td><code>profile_screen.dart</code></td>
+                <td><span class="badge bg-success">Tugas</span></td>
+                <td>Data profil dan logout dengan dialog konfirmasi.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="mb-1 fw-semibold small">Alur navigasi:</p>
+        <p class="mb-0 small text-muted">
+          <code>/login</code> <i class="bi bi-arrow-right"></i> <code>LoginScreen</code> (validasi) <i class="bi bi-arrow-right"></i> <code>MainScreen</code> (Beranda / Riwayat / Profil) <i class="bi bi-arrow-right"></i> dari Beranda:
+          <code>/add</code> atau <code>TransactionDetailScreen</code>; dari Profil: logout <i class="bi bi-arrow-right"></i> kembali ke <code>LoginScreen</code>.
+        </p>
+      </section>
+
+      <!-- E. VIDEO -->
+      <section id="video" class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title"><i class="bi bi-youtube text-danger me-2"></i>E. Video Demo Aplikasi</h4>
+        <p style="text-align: justify">Video berikut menjelaskan alur kerja aplikasi, struktur kode, dan demonstrasi fitur secara langsung.</p>
+        <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm border">
+          <iframe
+            src="https://www.youtube.com/@ahmadrakaalkindi6098"
+            title="Video Demo Aplikasi Finansial Flutter"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="text-center mt-3">
+          <a href="https://www.youtube.com/@ahmadrakaalkindi6098" target="_blank" rel="noopener noreferrer" class="btn btn-outline-danger btn-sm fw-semibold"><i class="bi bi-box-arrow-up-right me-1"></i> Buka di YouTube</a>
+        </div>
+      </section>
+
+      <!-- G. KESIMPULAN -->
+      <section id="kesimpulan" class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+        <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase sec-title">G. Kesimpulan</h4>
+        <p class="mb-0" style="text-align: justify">
+          Kesimpulan dari rangkaian praktikum ini adalah saya berhasil mengintegrasikan modul pembelajaran mulai dari pengenalan widget dasar, perancangan antarmuka, hingga penerapan arsitektur navigasi menggunakan
+          <code>Named Routes</code> dan <code>Bottom Navigation Bar</code>. Aplikasi yang dibangun memiliki alur navigasi yang terstruktur: login bervalidasi, dashboard dengan saldo dan daftar transaksi, detail dan penambahan transaksi,
+          serta halaman profil dengan logout. Pengelolaan tab dilakukan secara reaktif dengan <code>StatefulWidget</code>. Halaman Riwayat masih berupa placeholder dan dapat dikembangkan pada tahap berikutnya.
+        </p>
+      </section>
+
+      <div class="text-center py-3">
+        <a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm"><i class="bi bi-arrow-left me-1"></i> Kembali ke Halaman Utama Portofolio</a>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
