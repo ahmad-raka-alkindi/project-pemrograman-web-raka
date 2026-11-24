@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Laporan Praktikum 8 - HTTP Request dan Integrasi API pada ResepKu</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+body{background:#f4f6f9;color:#333;line-height:1.7;font-family:"Segoe UI",Arial,sans-serif}
+.nav-tabs .nav-link{color:#495057}.nav-tabs .nav-link.active{color:#1e3a8a}
+</style>
+</head>
+<body>
+<header class="bg-dark text-white py-3 shadow-sm sticky-top">
+ <div class="container d-flex justify-content-between align-items-center">
+  <h5 class="mb-0 fw-bold">Detail Dokumen: Laporan Praktikum 8</h5>
+  <a href="../portofolio.html" class="btn btn-outline-light btn-sm fw-semibold">Kembali ke Portofolio</a>
+ </div>
+</header>
+<main class="container py-5">
+
+<div class="bg-white p-4 p-md-5 shadow-sm rounded text-center mb-5 border-top border-5 border-dark">
+ <img src="../image/Logo Unand PTNBH.png" alt="Logo Universitas Andalas" class="img-fluid mb-4" style="max-height:180px" onerror="this.src='https://placehold.co/180x180/1e3a8a/white?text=UNAND'" />
+ <h2 class="fw-bold text-uppercase mb-2" style="color:#1e3a8a">Laporan Praktikum Aplikasi Mobile</h2>
+ <h3 class="fw-semibold text-muted mb-4">HTTP Request dan Integrasi API pada ResepKu</h3>
+ <a href="#" target="_blank" class="btn btn-dark btn-lg px-4 fw-bold shadow my-3">Repository GitHub: Praktikum Pekan 8</a>
+ <div class="py-3 my-4 border-top border-bottom">
+  <p class="mb-1 text-secondary fw-bold text-uppercase small">Oleh:</p>
+  <h4 class="fw-bold mb-1">AHMAD RAKA ALKINDI</h4>
+  <p class="lead text-muted mb-0">NIM. 2411533017</p>
+ </div>
+ <p class="mb-1 text-secondary fw-bold small text-uppercase">Dosen Pengampu:</p>
+ <p class="fw-semibold mb-3">ARIFAN RAHMAN, M.Kom.</p>
+ <p class="mb-1 text-secondary fw-bold small text-uppercase">Mata Kuliah:</p>
+ <p class="fw-semibold">PRAKTIKUM APLIKASI MOBILE (DIF61145)</p>
+ <div class="text-secondary fw-bold small text-uppercase mt-4">Program Studi S1 Informatika<br />Fakultas Teknologi Informasi<br />Universitas Andalas<br />Padang</div>
+</div>
+
+<div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+ <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color:#1e3a8a">A. Pendahuluan</h4>
+ <p style="text-align:justify">Praktikum ini melanjutkan aplikasi <strong>ResepKu</strong> dari Praktikum 7. Data dummy yang ditulis langsung di kode diganti dengan data dari REST API <code>https://dummyjson.com/recipes</code>. Konsep yang dipelajari:</p>
+ <div class="row g-3">
+  <div class="col-md-6"><div class="p-3 bg-light rounded h-100 border-start border-4 border-primary"><h6 class="fw-bold text-primary">a. Future, async/await</h6><p class="small text-muted mb-0">Operasi yang selesai di masa depan (misalnya request jaringan) tanpa membekukan UI.</p></div></div>
+  <div class="col-md-6"><div class="p-3 bg-light rounded h-100 border-start border-4 border-success"><h6 class="fw-bold text-success">b. JSON dan fromJson</h6><p class="small text-muted mb-0">Respons server berupa teks JSON yang diubah menjadi objek <code>Recipe</code> lewat <code>jsonDecode</code> dan factory <code>Recipe.fromJson</code>.</p></div></div>
+  <div class="col-md-6"><div class="p-3 bg-light rounded h-100 border-start border-4 border-warning"><h6 class="fw-bold text-warning">c. Package http dan RecipeService</h6><p class="small text-muted mb-0">Request GET dan POST dipusatkan dalam satu class service, lengkap dengan timeout dan pengecekan status code.</p></div></div>
+  <div class="col-md-6"><div class="p-3 bg-light rounded h-100 border-start border-4 border-danger"><h6 class="fw-bold text-danger">d. FutureBuilder</h6><p class="small text-muted mb-0">Menampilkan loading state, error state (tombol coba lagi), dan data, serta pull-to-refresh dengan <code>RefreshIndicator</code>.</p></div></div>
+ </div>
+</div>
+
+<div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+ <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color:#1e3a8a">B. Tujuan</h4>
+ <ol type="a" class="mb-0">
+  <li>Membaca struktur respons JSON dan membuat factory <code>fromJson</code> untuk model Recipe.</li>
+  <li>Melakukan request GET dengan package <code>http</code> di dalam class service.</li>
+  <li>Menampilkan data dengan <code>FutureBuilder</code> lengkap dengan loading state, error state, tombol coba lagi, dan pull-to-refresh.</li>
+  <li>Mengirim data baru dengan request POST dari sebuah form, lalu menangani hasilnya.</li>
+ </ol>
+</div>
+
+<div class="bg-white p-4 p-md-5 shadow-sm rounded mb-4">
+ <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color:#1e3a8a">C. Isi &amp; Langkah Kerja</h4>
+ <p style="text-align:justify">Seluruh screenshot aplikasi memperlihatkan footer identitas (NIM dan nama) dari Modul 6. Screenshot disimpan di folder <code>../semester5/pekan8/</code>.</p>
+
+ <ul class="nav nav-tabs justify-content-center my-4" role="tablist">
+  <li class="nav-item"><button class="nav-link active fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-a" type="button">1. Model</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-b" type="button">2. GET</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-c" type="button">3. POST</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-d" type="button">4. Pengujian</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-e" type="button">5. Analisis</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-f" type="button">6. Latihan</button></li>
+  <li class="nav-item"><button class="nav-link fw-bold text-uppercase small" data-bs-toggle="tab" data-bs-target="#t-g" type="button">7. Kode</button></li>
+ </ul>
+
+ <div class="tab-content">
+
+ <!-- A -->
+ <div class="tab-pane fade show active p-2" id="t-a">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #0d6efd !important">
+   <h5 class="fw-bold text-primary mb-3">LANGKAH 1: MENGENAL API DAN MODEL fromJson (BAGIAN A)</h5>
+   <ol class="small" style="text-align:justify">
+    <li class="mb-2"><strong>A.1</strong> Respons <code>https://dummyjson.com/recipes?limit=2</code> dibuka di browser. Objek terluar berisi key <code>recipes</code> (array), <code>total</code>, <code>skip</code>, dan <code>limit</code>.</li>
+    <li class="mb-2"><strong>A.2</strong> Package http dipasang dengan <code>flutter pub add http</code>.</li>
+    <li class="mb-2"><strong>A.3</strong> <code>recipe.dart</code> diganti: ditambah field <code>instructions</code> dan factory <code>Recipe.fromJson</code>. Rating dibaca sebagai <code>num</code> lalu <code>toDouble()</code>, field opsional diberi nilai bawaan.</li>
+    <li class="mb-2"><strong>A.4</strong> File <code>data/dummy_recipes.dart</code> beserta foldernya dihapus.</li>
+   </ol>
+   <h6 class="fw-bold">Tabel Langkah A.1</h6>
+   <div class="table-responsive"><table class="table table-bordered table-sm small">
+    <thead class="table-light"><tr><th>Pertanyaan</th><th>Jawaban</th></tr></thead>
+    <tbody>
+     <tr><td>Nilai <code>total</code></td><td class="fw-bold">50</td></tr>
+     <tr><td>Key yang berisi daftar resep</td><td class="fw-bold"><code>recipes</code></td></tr>
+     <tr><td>Tipe nilai <code>rating</code> resep pertama</td><td class="fw-bold">double (contoh 4.6)</td></tr>
+     <tr><td>Tiga key yang belum ada di model Modul 7</td><td class="fw-bold"><code>instructions</code>, <code>tags</code>, <code>mealType</code></td></tr>
+    </tbody></table></div>
+   <div class="row g-3">
+    <div class="col-md-8"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image1.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Respons+JSON'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 1: Respons JSON dummyjson di browser (total 50, key recipes, rating double)</small></div></div>
+   </div>
+  </div>
+ </div>
+
+ <!-- B -->
+ <div class="tab-pane fade p-2" id="t-b">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #dc3545 !important">
+   <h5 class="fw-bold text-danger mb-3">LANGKAH 2: RECIPESERVICE DAN FUTUREBUILDER (BAGIAN B)</h5>
+   <ol class="small" style="text-align:justify">
+    <li class="mb-2"><strong>B.1</strong> Dibuat <code>RecipeService</code> dengan method <code>fetchRecipes()</code> (GET, timeout 10 detik, <code>_checkStatus</code> untuk status non-2xx) dan <code>RecipeServiceException</code>.</li>
+    <li class="mb-2"><strong>B.2</strong> <code>RecipeService</code> didaftarkan di <code>main.dart</code> memakai <code>Provider</code> biasa; lalu dilakukan hot restart.</li>
+    <li class="mb-2"><strong>B.3</strong> Dibuat widget <code>ErrorView</code> berisi pesan dan tombol "Coba lagi".</li>
+    <li class="mb-2"><strong>B.4</strong> <code>HomePage</code> memakai <code>FutureBuilder</code>; Future dibuat sekali di <code>initState</code>, <code>_reload()</code> membuat Future baru, dan daftar dibungkus <code>RefreshIndicator</code>.</li>
+    <li class="mb-2"><strong>B.5</strong> Halaman detail menampilkan bagian "Langkah" dari <code>instructions</code> (versi SliverAppBar: <code>SliverToBoxAdapter</code> + <code>SliverList.builder</code>).</li>
+    <li class="mb-2"><strong>B.6</strong> Error state diuji dengan mode pesawat + hot restart, lalu tombol "Coba lagi" dan pull-to-refresh.</li>
+   </ol>
+   <h6 class="fw-bold">Checkpoint 1: Data dari Server</h6>
+   <div class="row g-3 mb-3">
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image2.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Home'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 2: Home dengan resep dari server (Classic Margherita Pizza, Vegetarian Stir-Fry, dst.)</small></div></div>
+   </div>
+   <h6 class="fw-bold">Checkpoint 2: Error State dan Refresh</h6>
+   <div class="row g-3">
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image3.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=ErrorView'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 3: ErrorView saat mode pesawat aktif, dengan tombol Coba lagi</small></div></div>
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image2.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Refresh'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 4: Pull-to-refresh sedang berjalan (indikator berputar di atas daftar lama)</small></div></div>
+   </div>
+  </div>
+ </div>
+
+ <!-- C -->
+ <div class="tab-pane fade p-2" id="t-c">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #10b981 !important">
+   <h5 class="fw-bold text-success mb-3">LANGKAH 3: MENGIRIM RESEP BARU / POST (BAGIAN C)</h5>
+   <ol class="small" style="text-align:justify">
+    <li class="mb-2"><strong>C.1</strong> Method <code>addRecipe()</code> ditambahkan di <code>RecipeService</code>: <code>POST /recipes/add</code> dengan header <code>Content-Type: application/json</code> dan body <code>jsonEncode</code>.</li>
+    <li class="mb-2"><strong>C.2</strong> Dibuat <code>AddRecipePage</code> berisi <code>Form</code> dengan tiga <code>TextFormField</code> (validator), tombol Simpan yang dinonaktifkan saat <code>_saving</code>, dan pemeriksaan <code>mounted</code> setelah <code>await</code>.</li>
+    <li class="mb-2"><strong>C.3</strong> Ditambahkan <code>FloatingActionButton</code> + di <code>HomePage</code> dan method <code>_openAddPage()</code> yang menampilkan SnackBar berisi id dari server.</li>
+    <li class="mb-2"><strong>C.4</strong> Diuji: form kosong menampilkan "Wajib diisi"; resep Rendang (Indonesian, 180 menit) berhasil dikirim, tetapi tidak muncul setelah refresh karena dummyjson hanya simulasi.</li>
+   </ol>
+   <h6 class="fw-bold">Checkpoint 3: POST</h6>
+   <div class="row g-3">
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image4.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Validasi'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 5: Form Tambah Resep dengan pesan validasi "Wajib diisi"</small></div></div>
+   </div>
+  </div>
+ </div>
+
+ <!-- D -->
+ <div class="tab-pane fade p-2" id="t-d">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #6f42c1 !important">
+   <h5 class="fw-bold mb-3" style="color:#6f42c1">LANGKAH 4: PENGUJIAN (BAGIAN D)</h5>
+   <div class="table-responsive"><table class="table table-bordered table-sm small align-middle">
+    <thead class="table-light"><tr><th class="text-center">No</th><th>Skenario</th><th>Hasil yang Diharapkan</th><th class="text-center">Sesuai?</th></tr></thead>
+    <tbody>
+     <tr><td class="text-center">1</td><td>Buka aplikasi</td><td>Indikator loading, lalu 50 resep dari server</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">2</td><td>Tandai dua resep favorit, lalu tarik untuk refresh</td><td>Ikon hati kedua resep tetap merah dan badge tetap 2</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">3</td><td>Tekan tombol grid, lalu kembali ke list</td><td>Tidak ada indikator loading baru</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">4</td><td>Buka detail salah satu resep</td><td>Foto, porsi, bahan, dan langkah memasak tampil</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">5</td><td>Mode pesawat, lalu hot restart</td><td>ErrorView dengan tombol "Coba lagi"</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">6</td><td>Matikan mode pesawat, tekan "Coba lagi"</td><td>Daftar resep tampil kembali</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+     <tr><td class="text-center">7</td><td>Kirim resep baru melalui tombol +</td><td>SnackBar berisi id dari server</td><td class="text-center text-success fw-bold">Sesuai</td></tr>
+    </tbody></table></div>
+  </div>
+ </div>
+
+ <!-- E -->
+ <div class="tab-pane fade p-2" id="t-e">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #0dcaf0 !important">
+   <h5 class="fw-bold mb-3" style="color:#0a8ba3">LANGKAH 5: PERTANYAAN ANALISIS</h5>
+   <div class="mb-4"><h6 class="fw-bold">1. Mengapa status favorit tetap benar padahal setiap refresh membuat objek Recipe baru?</h6>
+    <p class="small" style="text-align:justify">Karena <code>FavoriteProvider</code> tidak membandingkan resep berdasarkan identitas objek, melainkan berdasarkan <code>id</code> resep. Objek hasil <code>fromJson</code> yang baru memiliki <code>id</code> yang sama dengan resep sebelumnya, sehingga <code>isFavorite(recipe)</code> tetap menghasilkan <code>true</code>. Jika perbandingan memakai identitas objek, semua favorit akan "hilang" setiap kali data dimuat ulang.</p></div>
+   <div class="mb-4"><h6 class="fw-bold">2. Mengapa tombol grid tidak memunculkan loading? Apa jadinya jika future ditulis di build()?</h6>
+    <p class="small" style="text-align:justify">Future dibuat sekali di <code>initState</code> dan disimpan di <code>_recipesFuture</code>. Saat tombol grid ditekan, <code>setState</code> hanya memanggil <code>build</code> ulang, dan <code>FutureBuilder</code> tetap memakai Future yang sama yang sudah selesai, sehingga data langsung tampil. Jika <code>fetchRecipes()</code> ditulis di <code>build()</code>, setiap <code>setState</code> membuat Future baru: request terkirim ulang ke server dan indikator loading muncul lagi setiap tombol ditekan.</p></div>
+   <div class="mb-4"><h6 class="fw-bold">3. Dua keuntungan memakai RecipeService dibanding http.get langsung di HomePage</h6>
+    <p class="small" style="text-align:justify">Pertama, pemisahan tanggung jawab: widget hanya mengurus tampilan, sedangkan URL, timeout, pengecekan status, dan parsing JSON ada di satu tempat sehingga perubahan (misalnya base URL) cukup dilakukan sekali dan kode dapat dipakai ulang di banyak halaman (Home, Search, Add). Kedua, kemudahan pengujian: <code>http.Client</code> dapat diganti <code>MockClient</code> sehingga service diuji tanpa internet dan tanpa UI.</p></div>
+   <div class="mb-4"><h6 class="fw-bold">4. Mengapa resep hasil POST tidak muncul saat refresh? Bagaimana server sungguhan menampilkannya?</h6>
+    <p class="small" style="text-align:justify">dummyjson hanya menyimulasikan POST: server mengembalikan data beserta id baru, tetapi tidak benar-benar menyimpannya, sehingga GET berikutnya tidak memuat resep tersebut. Pada server sungguhan, data tersimpan di database sehingga muncul pada GET berikutnya. Aplikasi biasanya memuat ulang daftar dari server setelah POST berhasil, atau langsung menambahkan resep yang dikembalikan server ke daftar lokal (state) agar tampil segera.</p></div>
+   <div class="mb-2"><h6 class="fw-bold">5. Skenario apa yang dicegah oleh <code>if (!mounted) return;</code>?</h6>
+    <p class="small mb-0" style="text-align:justify">Setelah <code>await</code> (request yang bisa memakan beberapa detik), user mungkin sudah menutup halaman form. Tanpa pemeriksaan, kode tetap memanggil <code>Navigator.pop</code>, <code>setState</code>, atau <code>ScaffoldMessenger</code> pada widget yang sudah di-dispose, yang menimbulkan error "setState() called after dispose" atau memakai <code>context</code> yang tidak valid. Pemeriksaan <code>mounted</code> menghentikan eksekusi pada kondisi itu.</p></div>
+  </div>
+ </div>
+
+ <!-- F -->
+ <div class="tab-pane fade p-2" id="t-f">
+  <div class="p-4 border rounded shadow-sm mb-4" style="border-left:5px solid #212529 !important">
+   <h5 class="fw-bold mb-3">LATIHAN 1: PENCARIAN RESEP</h5>
+   <p class="small text-muted" style="text-align:justify">Ditambahkan <code>searchRecipes(query)</code> di <code>RecipeService</code> (memakai <code>Uri.replace(queryParameters)</code> agar query ter-encode) dan <code>SearchPage</code> dengan <code>TextField</code> di AppBar. Future disimpan di field nullable dan dibuat ulang di <code>onSubmitted</code>. Pesan awal "Masukkan kata kunci untuk mencari.", hasil kosong, loading, dan error ditangani; <code>RecipeTile</code> dan <code>ErrorView</code> dipakai kembali.</p>
+   <div class="row g-3">
+    <div class="col-md-3"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image5.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Halaman+Pencarian'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 6: Halaman pencarian sebelum user mencari</small></div></div>
+    <div class="col-md-3"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image6.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Hasil+Pasta'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 7: Hasil pencarian "Pasta" (3 resep)</small></div></div>
+    <div class="col-md-3"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image7.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Hasil+Kosong'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 8: Hasil kosong: Tidak ada resep untuk "Mobil"</small></div></div>
+    <div class="col-md-3"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image8.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Error'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 9: Error pencarian saat mode pesawat, dengan tombol Coba lagi</small></div></div>
+   </div>
+  </div>
+  <div class="p-4 border rounded shadow-sm mb-4" style="border-left:5px solid #dc3545 !important">
+   <h5 class="fw-bold text-danger mb-3">LATIHAN 2: MENGUBAH DAN MENGHAPUS RESEP</h5>
+   <p class="small text-muted" style="text-align:justify">Ditambahkan <code>PopupMenuButton</code> di AppBar detail (di <code>actions</code> <code>SliverAppBar</code> bila memakai versi Latihan 3 Modul 7). "Ubah nama" membuka <code>AlertDialog</code> + <code>TextField</code> lalu <code>PUT /recipes/{id}</code>; "Hapus" membuka dialog konfirmasi lalu <code>DELETE /recipes/{id}</code> dan menutup halaman bila <code>isDeleted: true</code>. Pemeriksaan <code>mounted</code> dilakukan setelah setiap <code>await</code>.</p>
+   <div class="row g-3">
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image9.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Menu'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 10: PopupMenuButton di halaman detail (Ubah nama, Hapus resep)</small></div></div>
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image10.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Dialog+Ubah'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 11: Dialog ubah nama resep</small></div></div>
+    <div class="col-md-4"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image11.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/400x600/e9ecef/6c757d?text=Konfirmasi+Hapus'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 12: Dialog konfirmasi hapus resep</small></div></div>
+   </div>
+  </div>
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #f59e0b !important">
+   <h5 class="fw-bold mb-3" style="color:#b45309">LATIHAN 3 (BONUS): UNIT TEST TANPA INTERNET</h5>
+   <p class="small text-muted" style="text-align:justify">File <code>test/recipe_service_test.dart</code> menguji <code>Recipe.fromJson</code> (rating 5 menjadi 5.0 dan nilai bawaan) serta <code>fetchRecipes</code> dengan <code>MockClient</code> (sukses dan status 404 melempar <code>RecipeServiceException</code>), ditambah pengujian <code>searchRecipes</code> dan <code>addRecipe</code>. Hasilnya 8 test lulus.</p>
+   <div class="row g-3"><div class="col-md-8"><div class="p-2 bg-light rounded border text-center shadow-sm"><img src="../semester5/pekan8/image12.png" class="img-fluid rounded border" onerror="this.src='https://placehold.co/600x300/e9ecef/6c757d?text=Output+flutter+test'" /><small class="text-muted d-block mt-2 fw-semibold">Gambar 13: Output <code>flutter test</code>: All tests passed (+8)</small></div></div></div>
+  </div>
+ </div>
+
+ <!-- G -->
+ <div class="tab-pane fade p-2" id="t-g">
+  <div class="p-4 border rounded shadow-sm" style="border-left:5px solid #f59e0b !important">
+   <h5 class="fw-bold mb-3" style="color:#b45309">LANGKAH 7: SOURCE CODE</h5>
+   <p class="small text-muted">Kode inti yang baru atau berubah. File lain (<code>recipe.dart</code>, <code>main.dart</code>, <code>error_view.dart</code>, dan sisa <code>home_page.dart</code> serta <code>add_recipe_page.dart</code>) sama seperti pada modul dan tersedia lengkap di repository GitHub.</p>
+   <div class="accordion" id="acc8">
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#c-service">lib/services/recipe_service.dart (dengan Latihan 1 dan 2)</button></h2>
+     <div id="c-service" class="accordion-collapse collapse show" data-bs-parent="#acc8"><div class="accordion-body p-2"><pre class="bg-dark text-light p-3 rounded small mb-0" style="max-height:420px;overflow:auto"><code>import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:resepku/models/recipe.dart';
+
+class RecipeService {
+  RecipeService({http.Client? client}) : _client = client ?? http.Client();
+  final http.Client _client;
+  static const _baseUrl = 'https://dummyjson.com';
+  static const _timeout = Duration(seconds: 10);
+
+  Future&lt;List&lt;Recipe&gt;&gt; fetchRecipes({int limit = 50}) async {
+    final uri = Uri.parse('$_baseUrl/recipes?limit=$limit');
+    final response = await _client.get(uri).timeout(_timeout);
+    return _parseList(response);
+  }
+
+  // Latihan 1
+  Future&lt;List&lt;Recipe&gt;&gt; searchRecipes(String query) async {
+    final uri = Uri.parse('$_baseUrl/recipes/search')
+        .replace(queryParameters: {'q': query});
+    final response = await _client.get(uri).timeout(_timeout);
+    return _parseList(response);
+  }
+
+  Future&lt;Recipe&gt; addRecipe({
+    required String name,
+    required String cuisine,
+    required int cookTimeMinutes,
+  }) async {
+    final response = await _client
+        .post(
+          Uri.parse('$_baseUrl/recipes/add'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'name': name,
+            'cuisine': cuisine,
+            'cookTimeMinutes': cookTimeMinutes,
+          }),
+        )
+        .timeout(_timeout);
+    _checkStatus(response);
+    return Recipe.fromJson(jsonDecode(response.body) as Map&lt;String, dynamic&gt;);
+  }
+
+  // Latihan 2: PUT, mengembalikan nama dari respons server
+  Future&lt;String&gt; updateRecipe(int id, String name) async {
+    final response = await _client
+        .put(
+          Uri.parse('$_baseUrl/recipes/$id'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'name': name}),
+        )
+        .timeout(_timeout);
+    _checkStatus(response);
+    final body = jsonDecode(response.body) as Map&lt;String, dynamic&gt;;
+    return body['name'] as String? ?? name;
+  }
+
+  // Latihan 2: DELETE, true jika isDeleted
+  Future&lt;bool&gt; deleteRecipe(int id) async {
+    final response = await _client
+        .delete(Uri.parse('$_baseUrl/recipes/$id'))
+        .timeout(_timeout);
+    _checkStatus(response);
+    final body = jsonDecode(response.body) as Map&lt;String, dynamic&gt;;
+    return body['isDeleted'] == true;
+  }
+
+  List&lt;Recipe&gt; _parseList(http.Response response) {
+    _checkStatus(response);
+    final body = jsonDecode(response.body) as Map&lt;String, dynamic&gt;;
+    final list = body['recipes'] as List&lt;dynamic&gt;;
+    return list
+        .map((item) =&gt; Recipe.fromJson(item as Map&lt;String, dynamic&gt;))
+        .toList();
+  }
+
+  void _checkStatus(http.Response response) {
+    if (response.statusCode &lt; 200 || response.statusCode &gt;= 300) {
+      throw RecipeServiceException(
+          'Server menjawab dengan status ${response.statusCode}');
+    }
+  }
+
+  void close() =&gt; _client.close();
+}
+
+class RecipeServiceException implements Exception {
+  RecipeServiceException(this.message);
+  final String message;
+  @override
+  String toString() =&gt; message;
+}</code></pre></div></div></div>
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#c-search">lib/pages/search_page.dart (Latihan 1)</button></h2>
+     <div id="c-search" class="accordion-collapse collapse" data-bs-parent="#acc8"><div class="accordion-body p-2"><pre class="bg-dark text-light p-3 rounded small mb-0" style="max-height:420px;overflow:auto"><code>import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resepku/models/recipe.dart';
+import 'package:resepku/services/recipe_service.dart';
+import 'package:resepku/widgets/error_view.dart';
+import 'package:resepku/widgets/recipe_tile.dart';
+
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
+
+  @override
+  State&lt;SearchPage&gt; createState() =&gt; _SearchPageState();
+}
+
+class _SearchPageState extends State&lt;SearchPage&gt; {
+  final _controller = TextEditingController();
+  Future&lt;List&lt;Recipe&gt;&gt;? _resultsFuture; // null = belum mencari
+  String _query = '';
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _search(String value) {
+    final query = value.trim();
+    if (query.isEmpty) return;
+    // Future baru dibuat di dalam setState, bukan di build()
+    setState(() {
+      _query = query;
+      _resultsFuture = context.read&lt;RecipeService&gt;().searchRecipes(query);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: TextField(
+          controller: _controller,
+          autofocus: true,
+          textInputAction: TextInputAction.search,
+          decoration: const InputDecoration(
+            hintText: 'Cari resep...',
+            border: InputBorder.none,
+          ),
+          onSubmitted: _search,
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () =&gt; _search(_controller.text),
+          ),
+        ],
+      ),
+      body: _resultsFuture == null
+          ? const Center(child: Text('Masukkan kata kunci untuk mencari.'))
+          : FutureBuilder&lt;List&lt;Recipe&gt;&gt;(
+              future: _resultsFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return ErrorView(
+                    message: 'Gagal mencari resep.\n${snapshot.error}',
+                    onRetry: () =&gt; _search(_query),
+                  );
+                }
+                final recipes = snapshot.data ?? [];
+                if (recipes.isEmpty) {
+                  return Center(child: Text('Tidak ada resep untuk "$_query".'));
+                }
+                return ListView.builder(
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) =&gt;
+                      RecipeTile(recipe: recipes[index]),
+                );
+              },
+            ),
+    );
+  }
+}</code></pre></div></div></div>
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#c-detail">lib/pages/detail_page.dart: ubah nama dan hapus (Latihan 2)</button></h2>
+     <div id="c-detail" class="accordion-collapse collapse" data-bs-parent="#acc8"><div class="accordion-body p-2"><pre class="bg-dark text-light p-3 rounded small mb-0" style="max-height:420px;overflow:auto"><code>// Di dalam _DetailPageState (detail_page.dart)
+
+Future&lt;void&gt; _editName() async {
+  final service = context.read&lt;RecipeService&gt;();
+  final controller = TextEditingController(text: widget.recipe.name);
+  final newName = await showDialog&lt;String&gt;(
+    context: context,
+    builder: (dialogContext) =&gt; AlertDialog(
+      title: const Text('Ubah nama resep'),
+      content: TextField(
+        controller: controller,
+        decoration: const InputDecoration(labelText: 'Nama resep'),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () =&gt; Navigator.pop(dialogContext),
+          child: const Text('Batal'),
+        ),
+        FilledButton(
+          onPressed: () =&gt; Navigator.pop(dialogContext, controller.text.trim()),
+          child: const Text('Simpan'),
+        ),
+      ],
+    ),
+  );
+  controller.dispose();
+  if (newName == null || newName.isEmpty) return;
+  try {
+    final serverName = await service.updateRecipe(widget.recipe.id, newName);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Nama dari server: "$serverName"')),
+    );
+  } catch (e) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Gagal mengubah: $e')));
+  }
+}
+
+Future&lt;void&gt; _deleteRecipe() async {
+  final service = context.read&lt;RecipeService&gt;();
+  final ok = await showDialog&lt;bool&gt;(
+    context: context,
+    builder: (dialogContext) =&gt; AlertDialog(
+      title: const Text('Hapus resep?'),
+      content: Text('Hapus "${widget.recipe.name}" dari server?'),
+      actions: [
+        TextButton(
+          onPressed: () =&gt; Navigator.pop(dialogContext, false),
+          child: const Text('Batal'),
+        ),
+        FilledButton(
+          onPressed: () =&gt; Navigator.pop(dialogContext, true),
+          child: const Text('Hapus'),
+        ),
+      ],
+    ),
+  );
+  if (ok != true) return;
+  try {
+    final deleted = await service.deleteRecipe(widget.recipe.id);
+    if (!mounted) return;
+    if (deleted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('"${widget.recipe.name}" dihapus (isDeleted: true)')),
+      );
+      Navigator.pop(context);
+    }
+  } catch (e) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Gagal menghapus: $e')));
+  }
+}
+
+// Di actions milik SliverAppBar, setelah tombol favorit:
+PopupMenuButton&lt;String&gt;(
+  onSelected: (value) {
+    if (value == 'edit') _editName();
+    if (value == 'delete') _deleteRecipe();
+  },
+  itemBuilder: (context) =&gt; const [
+    PopupMenuItem(value: 'edit', child: Text('Ubah nama')),
+    PopupMenuItem(value: 'delete', child: Text('Hapus resep')),
+  ],
+),</code></pre></div></div></div>
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#c-home">home_page.dart dan add_recipe_page.dart (potongan)</button></h2>
+     <div id="c-home" class="accordion-collapse collapse" data-bs-parent="#acc8"><div class="accordion-body p-2"><pre class="bg-dark text-light p-3 rounded small mb-0" style="max-height:420px;overflow:auto"><code>// home_page.dart (potongan): tombol cari di AppBar dan tombol tambah
+actions: [
+  IconButton(
+    tooltip: 'Cari resep',
+    icon: const Icon(Icons.search),
+    onPressed: () =&gt; Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =&gt; const SearchPage()),
+    ),
+  ),
+  // ... tombol grid, favorit, pengaturan (tetap)
+],
+floatingActionButton: FloatingActionButton(
+  tooltip: 'Tambah resep',
+  onPressed: _openAddPage,
+  child: const Icon(Icons.add),
+),
+
+// add_recipe_page.dart (potongan): tombol Simpan dengan ikon kirim
+FilledButton.icon(
+  onPressed: _saving ? null : _save,
+  icon: _saving
+      ? const SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        )
+      : const Icon(Icons.send),
+  label: const Text('Simpan'),
+),</code></pre></div></div></div>
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed small fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#c-test">test/recipe_service_test.dart (Latihan 3)</button></h2>
+     <div id="c-test" class="accordion-collapse collapse" data-bs-parent="#acc8"><div class="accordion-body p-2"><pre class="bg-dark text-light p-3 rounded small mb-0" style="max-height:420px;overflow:auto"><code>import 'dart:convert';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:resepku/models/recipe.dart';
+import 'package:resepku/services/recipe_service.dart';
+
+void main() {
+  group('Recipe.fromJson', () {
+    test('rating int (5) dibaca sebagai 5.0', () {
+      final r = Recipe.fromJson({'id': 1, 'name': 'Tes', 'rating': 5});
+      expect(r.rating, 5.0);
+      expect(r.rating, isA&lt;double&gt;());
+    });
+
+    test('field yang tidak ada diberi nilai bawaan', () {
+      final r = Recipe.fromJson({'id': 1, 'name': 'Tes'});
+      expect(r.cuisine, '-');
+      expect(r.difficulty, '-');
+      expect(r.servings, 1);
+      expect(r.image, '');
+      expect(r.instructions, isEmpty);
+    });
+
+    test('ingredients dan instructions dibaca sebagai List&lt;String&gt;', () {
+      final r = Recipe.fromJson({
+        'id': 1,
+        'name': 'Tes',
+        'ingredients': ['A', 'B'],
+        'instructions': ['Langkah 1'],
+      });
+      expect(r.ingredients, ['A', 'B']);
+      expect(r.instructions, ['Langkah 1']);
+    });
+
+    test('totalTimeMinutes = prep + cook', () {
+      final r = Recipe.fromJson({
+        'id': 1, 'name': 'Tes',
+        'prepTimeMinutes': 20, 'cookTimeMinutes': 15,
+      });
+      expect(r.totalTimeMinutes, 35);
+    });
+  });
+
+  group('RecipeService', () {
+    test('fetchRecipes mengembalikan List&lt;Recipe&gt;', () async {
+      final client = MockClient((_) async =&gt; http.Response(
+          jsonEncode({'recipes': [{'id': 1, 'name': 'A'}, {'id': 2, 'name': 'B'}]}),
+          200));
+      final list = await RecipeService(client: client).fetchRecipes();
+      expect(list.length, 2);
+      expect(list.first.name, 'A');
+    });
+
+    test('status 404 melempar RecipeServiceException', () async {
+      final client = MockClient((_) async =&gt; http.Response('', 404));
+      expect(RecipeService(client: client).fetchRecipes(),
+          throwsA(isA&lt;RecipeServiceException&gt;()));
+    });
+
+    test('searchRecipes mengirim parameter q', () async {
+      late Uri requested;
+      final client = MockClient((request) async {
+        requested = request.url;
+        return http.Response(jsonEncode({'recipes': []}), 200);
+      });
+      await RecipeService(client: client).searchRecipes('pasta goreng');
+      expect(requested.path, '/recipes/search');
+      expect(requested.queryParameters['q'], 'pasta goreng');
+    });
+
+    test('addRecipe mengembalikan Recipe dari respons POST', () async {
+      final client = MockClient((_) async =&gt; http.Response(
+          jsonEncode({'id': 51, 'name': 'Rendang', 'cuisine': 'Indonesian'}),
+          201));
+      final r = await RecipeService(client: client).addRecipe(
+          name: 'Rendang', cuisine: 'Indonesian', cookTimeMinutes: 180);
+      expect(r.id, 51);
+      expect(r.name, 'Rendang');
+    });
+  });
+}</code></pre></div></div></div>
+   </div>
+  </div>
+ </div>
+ </div>
+</div>
+
+<div class="bg-white p-4 p-md-5 shadow-sm rounded border-bottom border-5 border-success mb-4">
+ <h4 class="fw-bold mb-3 pb-2 border-bottom text-uppercase" style="color:#1e3a8a">D. Kesimpulan</h4>
+ <p class="mb-0" style="text-align:justify">Dari praktikum ini saya memahami cara mengintegrasikan aplikasi Flutter dengan REST API. Data dummy digantikan data dari dummyjson.com yang diubah menjadi objek lewat <code>fromJson</code>. Seluruh komunikasi server dipusatkan di <code>RecipeService</code> sehingga widget tetap bersih dan mudah diuji. <code>FutureBuilder</code> menangani loading, error (dengan tombol coba lagi), dan data, sedangkan Future dibuat di <code>initState</code> agar tidak terkirim ulang setiap <code>build</code>. Request POST dari form berhasil dikirim dan ditangani, termasuk validasi dan pemeriksaan <code>mounted</code>, dengan catatan dummyjson hanya menyimulasikan penyimpanan. Fitur favorit, list, dan grid dari modul sebelumnya tetap berjalan dengan data dari server.</p>
+</div>
+<div class="text-center py-3"><a href="../portofolio.html" class="btn btn-secondary fw-bold px-4 shadow-sm">Kembali ke Halaman Utama Portofolio</a></div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
